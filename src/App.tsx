@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import './App.css';
 import Menu from "./components/menu";
-import React from 'react';
 import EraseButton from './components/erasebutton';
 
 

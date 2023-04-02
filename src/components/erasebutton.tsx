@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Menu from "./menu";
+import { useState } from "react";
 
 function EraseButton({ menu }: { menu: JSX.Element }) {
   const [isVisible, setIsVisible] = useState<boolean>(true);
