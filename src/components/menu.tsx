@@ -1,13 +1,14 @@
 import React, { useState, ChangeEvent } from "react";
 import DropDown from "./dropdown";
-import setConditionals from "./utils";
-import math from  "./algo"
+import algo from "./algo"
+import './comp.css'
+import OutputTable from "./outputtable";
 
 function Menu() {
   const [selectSet, setSelectSet] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const Sets = () => {
-    return ["Set of 1", "Set of 2", "Set of 3", "Set of 4"];
+    return ["Set of 1", "Set of 2", "Set of 3", "Set of 4", "Set of 5", "Set of 6", "Set of 7", "Set of 8"];
   };
 
   /** below is all the code i took from the original app to attempt to do conditionals in menu */
@@ -23,7 +24,14 @@ function Menu() {
   const handleThreeRMChange = (e: ChangeEvent<HTMLInputElement>) => {
     setThreeRM(+e.target.value);
   }
-
+  const [fourrepmax, setFourRM] = useState(Number);
+  const handleFourRMChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFourRM(+e.target.value);
+  }
+  const [fiverepmax, setFiveRM] = useState(Number);
+  const handleFiveRMChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFiveRM(+e.target.value);
+  }
   /**
    * Toggle the drop down menu
    */
@@ -52,54 +60,78 @@ function Menu() {
     setSelectSet(Set);
   };
 
+  const RMs = algo(onerepmax, tworepmax, threerepmax, fourrepmax, fiverepmax)
   return (
 
-    <>
-      <label>1 Rep Max</label>
-      <input type="number" id="onerepmax" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange}>
-
-      </input>
-      <br />
-      <label>2 Rep Max</label>
-      <input type="number" id="tworepmax" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
-
-      </input>
-      <br />
-      <label>3 Rep Max</label>
-      <input type="number" id="threerepmax" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
-
-      </input>
-      <br />
-      <div className="announcement">
-        <div>
-          {selectSet
-            ? `You selected ${selectSet}`
-            : "Select the number of repetitions in your set"}
+    <div className="container">
+      <div className="inputs">
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <label>1 Rep Max:  </label>
+          <input type="number" id="onerepmax" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
+          <br />
         </div>
+        <br />
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <label>2 Rep Max:  </label>
+          <input type="number" id="tworepmax" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
+          </input>
+          <br />
+        </div>
+        <br />
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <label>3 Rep Max:  </label>
+          <input type="number" id="threerepmax" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
+          </input>
+          <br />
+        </div>
+        <br />
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <label>4 Rep Max:  </label>
+          <input type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
+          </input>
+          <br />
+        </div>
+        <br />
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <label>5 Rep Max:  </label>
+          <input type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
+          </input>
+          <br />
+        </div>
+        <br />
+        <div>
+          <div style={{ whiteSpace: 'nowrap' }}>
+            {selectSet
+              ? `You selected ${selectSet}`
+              : "Select the number of repetitions in your set"}
+          </div>
+        </div>
+        <button
+          className={showDropDown ? "active" : undefined}
+          onClick={(): void => toggleDropDown()}
+          onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+            dismissHandler(e)
+          }
+        >
+          <button>{selectSet ? "Select: " + selectSet : "Select ..."} </button>
+          {showDropDown && (
+            <DropDown
+              Sets={Sets()}
+              showDropDown={false}
+              toggleDropDown={(): void => toggleDropDown()}
+              SetSelection={SetSelection}
+            />
+          )}
+        </button>
+        <br />
+        <br />
       </div>
-      <button
-        className={showDropDown ? "active" : undefined}
-        onClick={(): void => toggleDropDown()}
-        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-          dismissHandler(e)
-        }
-      >
-        <button>{selectSet ? "Select: " + selectSet : "Select ..."} </button>
-        {showDropDown && (
-          <DropDown
-            Sets={Sets()}
-            showDropDown={false}
-            toggleDropDown={(): void => toggleDropDown()}
-            SetSelection={SetSelection}
-          />
-        )}
-      </button>
-      <br />
-
-      <div>
-        {math(selectSet, onerepmax, tworepmax, threerepmax)}
+      <div className="outputs">
+        <OutputTable
+          selectSet={selectSet}
+          RMs={RMs} />
       </div>
-    </>
+    </div>
   );
 
 };

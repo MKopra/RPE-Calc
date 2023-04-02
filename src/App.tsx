@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import './App.css';
 import Menu from "./components/menu";
+import React from 'react';
+import EraseButton from './components/erasebutton';
 
 
 function App() {
@@ -8,12 +11,10 @@ function App() {
 
     <div className="App">
       <header className="App-header">
-        <p>Hello, Matt! This is your app.</p>
+        <p className="title">RPE Calculator</p>
         <br />
-        <br />
-
         <div className="app">
-          <Menu />
+          <EraseButton menu={<Menu />} />
         </div>
         <br />
         <br />
