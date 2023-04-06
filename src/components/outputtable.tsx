@@ -7,24 +7,10 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
     const set6 = selectSet == "Set of 6"
     const set7 = selectSet == "Set of 7"
     const set8 = selectSet == "Set of 8"
-    const styles = {
-        body: {
-            backgroundColor: "white",
-            color: "black",
-            padding: "50px"
-        },
-        header: {
-            fontSize: "0.8em",
-            margin: "20px 0",
-        },
-        div: {
-            marginBottom: "10px",
-        },
-    };
     if (set1)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body>
+                <header>
                     <div>RPE 10:  {RMs[0]}</div>
                     <br />
                     <div>RPE 9:  {RMs[1]}</div>
@@ -41,8 +27,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set2)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body  >
+                <header>
                     <div>RPE 10:  {RMs[1]}</div>
                     <br />
                     <div>RPE 9:  {RMs[2]}</div>
@@ -59,8 +45,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set3)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body>
+                <header>
                     <div>RPE 10:  {RMs[2]}</div>
                     <br />
                     <div>RPE 9:  {RMs[3]}</div>
@@ -77,8 +63,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set4)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body>
+                <header>
                     <div>RPE 10:  {RMs[3]}</div>
                     <br />
                     <div>RPE 9:  {RMs[4]}</div>
@@ -95,8 +81,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set5)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body>
+                <header>
                     <div>RPE 10:  {RMs[4]}</div>
                     <br />
                     <div>RPE 9:  {RMs[5]}</div>
@@ -113,8 +99,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set6)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body >
+                <header >
                     <div>RPE 10:  {RMs[5]}</div>
                     <br />
                     <div>RPE 9:  {RMs[6]}</div>
@@ -131,8 +117,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set7)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body>
+                <header>
                     <div>RPE 10:  {RMs[6]}</div>
                     <br />
                     <div>RPE 9:  {RMs[7]}</div>
@@ -149,8 +135,8 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set8)
         return (
-            <body style={styles.body}>
-                <header style={styles.header}>
+            <body>
+                <header>
                     <div>RPE 10:  {RMs[7]}</div>
                     <br />
                     <div>RPE 9:  {RMs[8]}</div>

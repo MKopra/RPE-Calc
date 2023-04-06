@@ -80,6 +80,19 @@ function algo(onerepmax: number, tworepmax: number, threerepmax: number, fourrep
         RMs[3] = fourrepmax
     if (fiverepmax != 0)
         RMs[4] = fiverepmax
+    RMs[0] = parseFloat(RMs[0].toFixed(1))
+    RMs[1] = parseFloat(RMs[1].toFixed(1))
+    RMs[2] = parseFloat(RMs[2].toFixed(1))
+    RMs[3] = parseFloat(RMs[3].toFixed(1))
+    RMs[4] = parseFloat(RMs[4].toFixed(1))
+    RMs[5] = parseFloat(RMs[5].toFixed(1))
+    RMs[6] = parseFloat(RMs[6].toFixed(1))
+    RMs[7] = parseFloat(RMs[7].toFixed(1))
+    RMs[8] = parseFloat(RMs[8].toFixed(1))
+    RMs[9] = parseFloat(RMs[9].toFixed(1))
+    RMs[10] = parseFloat(RMs[10].toFixed(1))
+    RMs[11] = parseFloat(RMs[11].toFixed(1))
+    
     return RMs
 }
 export default algo

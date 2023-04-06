@@ -64,37 +64,38 @@ function Menu() {
   return (
 
     <div className="container">
-      <div className="inputs">
+      <div className="inputs bg-gray-600 p-6 rounded-lg shadow-md">
+        <div className="input-box">
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>1 Rep Max:  </label>
-          <input type="number" id="onerepmax" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
+          <input className="text-black" type="number" id="onerepmax" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>2 Rep Max:  </label>
-          <input type="number" id="tworepmax" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
+          <input className="text-black" type="number" id="tworepmax" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
           </input>
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>3 Rep Max:  </label>
-          <input type="number" id="threerepmax" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
+          <input className="text-black" type="number" id="threerepmax" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
           </input>
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>4 Rep Max:  </label>
-          <input type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
+          <input className="text-black" type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
           </input>
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>5 Rep Max:  </label>
-          <input type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
+          <input className="text-black" type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
           </input>
           <br />
         </div>
@@ -102,18 +103,21 @@ function Menu() {
         <div>
           <div style={{ whiteSpace: 'nowrap' }}>
             {selectSet
-              ? `You selected ${selectSet}`
+              ? ``
               : "Select the number of repetitions in your set"}
           </div>
         </div>
+        </div>
+        <div className="drop-down">
         <button
-          className={showDropDown ? "active" : undefined}
-          onClick={(): void => toggleDropDown()}
+  className={`bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded-md shadow-md ${showDropDown ? "active" : ""}`}
+  onClick={(): void => toggleDropDown()}
           onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
             dismissHandler(e)
           }
         >
-          <button>{selectSet ? "Select: " + selectSet : "Select ..."} </button>
+          <button
+          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded-md shadow-md hover:bg-gray-600 active:outline-none">{selectSet ? "Selected: " + selectSet : "Select ..."} </button>
           {showDropDown && (
             <DropDown
               Sets={Sets()}
@@ -125,8 +129,9 @@ function Menu() {
         </button>
         <br />
         <br />
+        </div>
       </div>
-      <div className="outputs">
+      <div className="outputs-container bg-white rounded-md shadow-md">
         <OutputTable
           selectSet={selectSet}
           RMs={RMs} />

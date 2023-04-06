@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 type DropDownProps = {
   Sets: string[];
@@ -29,7 +30,7 @@ const DropDown: React.FC<DropDownProps> = ({
 
   return (
     <>
-      <div className={showDropDown ? 'dropdown' : 'dropdown active'}>
+      <div className={classNames('dropdown', { 'active': showDropDown, 'bg-fill': showDropDown })}>
         {Sets.map(
           (Set: string, index: number): JSX.Element => {
             return (
@@ -38,6 +39,7 @@ const DropDown: React.FC<DropDownProps> = ({
                 onClick={(): void => {
                   onClickHandler(Set);
                 }}
+                className="text-white-800 hover:text-white-500 cursor-pointer"
               >
                 {Set}
               </p>
@@ -50,4 +52,4 @@ const DropDown: React.FC<DropDownProps> = ({
 };
 
 export default DropDown;
-export { }
+export {};

@@ -10,7 +10,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p className="title">RPE Calculator</p>
-        <br />
         <div className="app">
           <EraseButton menu={<Menu />} />
         </div>
@@ -19,6 +18,6 @@ function App() {
       </header>
     </div>
   );
-}
+} //////////////// ------- add tailwind CSS ------------------
 
 export default App

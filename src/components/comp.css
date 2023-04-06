@@ -1,26 +1,51 @@
+.input-box {
+    position: absolute;
+    top: 20%;
+    bottom: 80%;
+    left: 20%;
+    right:80%;
+    }
+    
+.drop-down {
+    position: absolute;
+    top: 73%;
+    bottom: 27%;
+    left: 25%;
+    right:75%;
+    font-size: 24px;
+    width: 300px
+    }
+    
 .container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    align-items: center;
-  }
-  
-  .inputs {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 150px;
-    padding-right: 100px;
-    margin: 20px;
-  }
-  
-  .outputs {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    padding-left: 100px;
-    padding-right: 150px;
-    margin: 20px;
-  }
-  
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      align-items: center;
+    }
+    
+.inputs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: -360px 0 0 -350px;
+      width: 600px;
+      height: 450px;
+    }
+    
+    
+.outputs-container {
+      position: relative;
+      background-color: white;
+      color: black;
+      width: flex;
+      height: flex;
+      top: -13%;
+      bottom: 113%;
+      left: 25%;
+      right: 75%;
+      justify-content: center;
+      align-items: flex;
+      padding-left: 100px;
+      padding-right: 150px;
+      }
+    
