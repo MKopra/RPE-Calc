@@ -68,34 +68,34 @@ function Menu() {
         <div className="input-box">
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>1 Rep Max:  </label>
-          <input className="text-black" type="number" id="onerepmax" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
+          <input className="text-black rounded-md" type="number" id="onerepmax" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>2 Rep Max:  </label>
-          <input className="text-black" type="number" id="tworepmax" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
+          <input className="text-black rounded-md" type="number" id="tworepmax" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
           </input>
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>3 Rep Max:  </label>
-          <input className="text-black" type="number" id="threerepmax" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
+          <input className="text-black rounded-md" type="number" id="threerepmax" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
           </input>
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>4 Rep Max:  </label>
-          <input className="text-black" type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
+          <input className="text-black rounded-md" type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
           </input>
           <br />
         </div>
         <br />
         <div style={{ whiteSpace: 'nowrap' }}>
           <label>5 Rep Max:  </label>
-          <input className="text-black" type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
+          <input className="text-black rounded-md" type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
           </input>
           <br />
         </div>
