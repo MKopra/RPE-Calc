@@ -9,7 +9,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
     const set8 = selectSet == "Set of 8"
     if (set1)
         return (
-            <body>
+            <body className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[0]}</div>
                     <br />
@@ -27,7 +27,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set2)
         return (
-            <body  >
+            <body  className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[1]}</div>
                     <br />
@@ -45,7 +45,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set3)
         return (
-            <body>
+            <body className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[2]}</div>
                     <br />
@@ -63,7 +63,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set4)
         return (
-            <body>
+            <body className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[3]}</div>
                     <br />
@@ -81,7 +81,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set5)
         return (
-            <body>
+            <body className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[4]}</div>
                     <br />
@@ -99,7 +99,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set6)
         return (
-            <body >
+            <body className="w-500 px-20 py-5">
                 <header >
                     <div>RPE 10:  {RMs[5]}</div>
                     <br />
@@ -117,7 +117,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set7)
         return (
-            <body>
+            <body className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[6]}</div>
                     <br />
@@ -135,7 +135,7 @@ function OutputTable({ selectSet, RMs }: { selectSet: string, RMs: number[] }) {
         );
     if (set8)
         return (
-            <body>
+            <body className="w-500 px-20 py-5">
                 <header>
                     <div>RPE 10:  {RMs[7]}</div>
                     <br />

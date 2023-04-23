@@ -1,13 +1,13 @@
 import React, { useState, ChangeEvent } from "react";
 import DropDown from "./dropdown";
-import algo from "./algo"
-import OutputTable from "./outputtable";
+import calalgo from "./calalgo"
+import OneRepTable from "./onereptable";
 import '../index.css';
 
 
 
 
-function Menu() {
+function CalMenu() {
   const [selectSet, setSelectSet] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const Sets = () => {
@@ -15,25 +15,15 @@ function Menu() {
   };
 
   /** below is all the code i took from the original app to attempt to do conditionals in menu */
-  const [onerepmax, setOneRM] = useState(Number);
-  const handleOneRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setOneRM(+e.target.value);
+  const [calweightlifted, setcalWeightLifted] = useState(Number);
+  const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setcalWeightLifted(+e.target.value);
+
   }
-  const [tworepmax, setTwoRM] = useState(Number);
-  const handleTwoRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTwoRM(+e.target.value);
-  }
-  const [threerepmax, setThreeRM] = useState(Number);
-  const handleThreeRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setThreeRM(+e.target.value);
-  }
-  const [fourrepmax, setFourRM] = useState(Number);
-  const handleFourRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFourRM(+e.target.value);
-  }
-  const [fiverepmax, setFiveRM] = useState(Number);
-  const handleFiveRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFiveRM(+e.target.value);
+  const [bodyweight, setbodyweight] = useState(Number);
+  const handleBodyweightChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setbodyweight(+e.target.value);
+
   }
   /**
    * Toggle the drop down menu
@@ -63,51 +53,31 @@ function Menu() {
     setSelectSet(Set);
   };
 
-  const RMs = algo(onerepmax, tworepmax, threerepmax, fourrepmax, fiverepmax)
+  const oRMs = calalgo(selectSet, calweightlifted, bodyweight)
   return (
-
+<div>
+<p className="flex flex wrap justify-center text-white text-3xl font-bold items-top">Weighted Calesthenics Calculator</p>
     <div className="flex flex-wrap py-10 h-full lg:h-screen justify-center items-top">
       <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min ml-10 justify-center items-center">
         <div>
         <div>
-          <label className="px-2 text-white text-lg font-semibold">1 Rep Max :  </label>
-          <input className="rounded-md" type="number" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
+          <label className="px-2 text-white text-lg font-semibold">Bodyweight :  </label>
+          <input className="rounded-md" type="number" value={bodyweight === 0 ? '' : bodyweight} onChange={handleBodyweightChange} />
+          <br />
+        </div>
+        <p className="py-3"></p>
+        <div>
+          <label className="px-2 text-white text-lg font-semibold">Weight Lifted :  </label>
+          <input className="rounded-md" type="number" value={calweightlifted === 0 ? '' : calweightlifted} onChange={handleWeightChange} />
           <br />
         </div>
         <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">2 Rep Max :  </label>
-          <input className="rounded-md" type="number" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">3 Rep Max :  </label>
-          <input className="rounded-md" type="number" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">4 Rep Max :  </label>
-          <input className="rounded-md" type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">5 Rep Max :  </label>
-          <input className="rounded-md" type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
-          </input>
-          <br />
-        </div>
         <br />
         <div>
           <div className="py-2 text-white text-lg font-semibold">
             {selectSet
               ? ``
-              : "Select the number of repetitions in your set"}
+              : "Select the number of repetitions completed"}
           </div>
         </div>
         </div>
@@ -137,16 +107,16 @@ function Menu() {
       <div className="px-4 lg:px-20">
         <div className="py-10">
           <div className="justify-center py-5 items-start bg-white rounded-md shadow-md font-semibold h-min">
-            <OutputTable
-              selectSet={selectSet}
-              RMs={RMs} />
+            <OneRepTable
+              oRMs={oRMs} />
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 
 };
 
 
-export default Menu;
+export default CalMenu;
