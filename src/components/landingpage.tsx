@@ -33,8 +33,11 @@ function LandingPage() {
 
   return (
     
-
-    <body className="flex flex-wrap justify-center items-center px-8 h-full"> 
+    <div>
+     {isVisible1 && (   <div className="flex flex-col items-center">
+        <p className="text-4xl font-bold text-white py-5">Welcome to RepetitionMax.com!</p> 
+    </div> )}
+    <body className="flex flex-wrap justify-center items-center px-8 h-full">
     {isVisible1 && (
         <div className="px-2 py-2 w-full md:w-full lg:w-1/2 py-5 h-min">
             <div className="text-white p-4 bg-gray-600 p-6 rounded-lg shadow-md">
@@ -85,7 +88,7 @@ function LandingPage() {
                     </div>
                 } </div>
     </body>
-
+    </div>
   );
 }
 const LandingPageElement = <LandingPage />;
