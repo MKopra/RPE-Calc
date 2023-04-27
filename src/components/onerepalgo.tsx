@@ -43,6 +43,16 @@ function onerepalgo(selectSet: string, weightLifted: number) {
             oRMs[7] = weightLifted
             for (let i = 0; i < multip.length; i++)
             oRMs[i] = (((oRMs[0]) * multip[i]))}
+    if (selectSet == "Set of 9") {
+            oRMs[0] = weightLifted/(multip[8])
+            oRMs[8] = weightLifted
+            for (let i = 0; i < multip.length; i++)
+            oRMs[i] = (((oRMs[0]) * multip[i]))}
+    if (selectSet == "Set of 10") {
+            oRMs[0] = weightLifted/(multip[9])
+            oRMs[9] = weightLifted
+            for (let i = 0; i < multip.length; i++)
+            oRMs[i] = (((oRMs[0]) * multip[i]))}
 
     oRMs[0] = parseFloat(oRMs[0].toFixed(1))
     oRMs[1] = parseFloat(oRMs[1].toFixed(1))

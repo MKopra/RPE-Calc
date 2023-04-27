@@ -3,6 +3,7 @@ import DropDown from "./dropdown";
 import algo from "./algo"
 import OutputTable from "./outputtable";
 import '../index.css';
+import BackButton from "./backbutton";
 
 
 
@@ -65,9 +66,9 @@ function Menu() {
 
   const RMs = algo(onerepmax, tworepmax, threerepmax, fourrepmax, fiverepmax)
   return (
-
+<div>
     <div className="flex flex-wrap py-10 h-full lg:h-screen justify-center items-top">
-      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min ml-10 justify-center items-center">
+      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min justify-center items-center">
         <div>
         <div>
           <label className="px-2 text-white text-lg font-semibold">1 Rep Max :  </label>
@@ -143,6 +144,8 @@ function Menu() {
           </div>
         </div>
       </div>
+    </div>
+    <div className="flex flex-col items-center justify-end"><BackButton/></div>
     </div>
   );
 

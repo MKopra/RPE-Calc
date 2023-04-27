@@ -33,17 +33,17 @@ function LandingPage() {
 
   return (
     
-    <div>
+    <div className="min-h-screen h-full">
      {isVisible1 && (   <div className="flex flex-col items-center">
-        <p className="text-4xl font-bold text-white py-5">Welcome to RepetitionMax.com!</p> 
+        <p className="text-4xl font-bold text-white py-5 px-4">Welcome to RepetitionMax.com!</p> 
     </div> )}
-    <body className="flex flex-wrap justify-center items-center px-8 h-full">
+    <body className="flex flex-wrap justify-center items-top px-8 h-full">
     {isVisible1 && (
         <div className="px-2 py-2 w-full md:w-full lg:w-1/2 py-5 h-min">
             <div className="text-white p-4 bg-gray-600 p-6 rounded-lg shadow-md">
                 <div className="text-md lg:text-xl">Welcome to RepetitionMax.com, this website serves as a one stop shop for any strength-nerd type calculations you could possibly require. The three tools you'll find on this webpage are: </div>
                 <div className="text-xl lg:text-2xl font-bold py-3">1. One Rep Max Calculator</div>
-                <div className="text-md lg:text-xl">a one repetition max calculator that takes a weight lifted for a certain number of reps 1-10, and uses that to find your estimated repetition maxes. </div>
+                <div className="text-md lg:text-xl">A one repetition max calculator that takes a weight lifted for a certain number of reps 1-10, and uses that to find your estimated repetition maxes. </div>
                 <div className="text-xl lg:text-2xl font-bold py-3">2. RPE Calculator</div>
                 <div className="text-md lg:text-xl">An RPE calculator that takes your repetition maxes, and uses them to provide you with Rate of Perceived Exertion prescriptions upt to a set of 8, and out to RPE 5. </div>
                 <div className="text-xl lg:text-2xl font-bold py-3">3. Weighted Calesthenics Calculator </div>
@@ -61,8 +61,8 @@ function LandingPage() {
                 {isVisible1 &&<button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl px-5"onClick={() => handleClick2("rpecalc")}>RPE Calculator</button>}
                 {!isVisible1}
                 </div>
-                <div className="py-5">
-                {isVisible1 &&<button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl px-5"onClick={() => handleClick3("cal")}>Weighted Calesthenics Calculator</button>}
+                <div className="py-5 flex justify-center">
+                {isVisible1 &&<button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-2 rounded-md shadow-md hover:bg-gray-600 text-xl w-3/4"onClick={() => handleClick3("cal")}>Weighted Calesthenics Calculator</button>}
                 {!isVisible1}
                 </div>
             </div>

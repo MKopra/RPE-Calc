@@ -5,6 +5,14 @@ import landingPage from "./components/landingpage";
 import LandingPageElement from "./components/landingpage";
 import Navbar from "./components/navbar";
 import { useState } from "react";
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import OneRepLanding from "./components/onereplanding";
+import OneRepMenu from "./components/onerepmenu";
+import CalLanding from "./components/callanding";
+import CalMenu from "./components/calmenu";
+import RoutesApp from "./components/routes";
+
+
 
 
 
@@ -18,12 +26,19 @@ function App() {
   };
 
   return (
-
-    <div className="bg-gray-700">
+    <div className="bg-gray-700 h-full">
       <header>
       <Navbar isLoggedIn={isLoggedIn} onLogin={() => handleLogin()} />
         <div>
-          {LandingPageElement}
+          <Routes>
+            <Route path='/' element={LandingPageElement}/>
+            <Route path='/onerepmax-landing' element={<OneRepLanding OneRepMenu={<OneRepMenu />} />}/>
+            <Route path='/onerepmax-calc' element={<OneRepMenu/>}/>
+            <Route path='/rpe-landing' element={<EraseButton menu={<Menu/>}/>}/>
+            <Route path='/rpe-calc' element={<Menu/>}/>
+            <Route path='/cal-landing' element={<CalLanding CalMenu={<CalMenu/>} />}/>
+            <Route path='/cal-calc' element={<CalMenu/>}/>
+          </Routes>
         </div>
         <br />
         <br />

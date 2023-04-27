@@ -3,6 +3,7 @@ import DropDown from "./dropdown";
 import calalgo from "./calalgo"
 import OneRepTable from "./onereptable";
 import '../index.css';
+import BackButton from "./backbutton";
 
 
 
@@ -56,9 +57,10 @@ function CalMenu() {
   const oRMs = calalgo(selectSet, calweightlifted, bodyweight)
   return (
 <div>
+<div>
 <p className="flex flex wrap justify-center text-white text-3xl font-bold items-top">Weighted Calesthenics Calculator</p>
     <div className="flex flex-wrap py-10 h-full lg:h-screen justify-center items-top">
-      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min ml-10 justify-center items-center">
+      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min justify-center items-center">
         <div>
         <div>
           <label className="px-2 text-white text-lg font-semibold">Bodyweight :  </label>
@@ -113,6 +115,8 @@ function CalMenu() {
         </div>
       </div>
     </div>
+    </div>
+    <div className="flex flex-col items-center justify-end"><BackButton/></div>
     </div>
   );
 

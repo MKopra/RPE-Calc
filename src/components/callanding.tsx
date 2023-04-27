@@ -12,7 +12,7 @@ function CalLanding({ CalMenu }: { CalMenu: JSX.Element }) {
   return (
     <>
       {isVisible && (
-        <div className="flex flex-wrap px-8">
+        <div className="flex flex-wrap px-4 py-4">
           <div className="text-white p-4 bg-gray-600 p-6 rounded-lg shadow-md w-full md:w-full lg:w-1/2 py-5">
             <p className="text-2xl lg:text-3xl font-bold py-3">
               What is a Weighted Calesthenics Calculator? </p>

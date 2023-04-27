@@ -11,7 +11,7 @@ function EraseButton({ menu }: { menu: JSX.Element }) {
   return (
     <>
       {isVisible && (
-        <div className="flex flex-wrap px-8">
+        <div className="flex flex-wrap px-4 py-4">
           <div className="text-white p-4 bg-gray-600 p-6 rounded-lg shadow-md w-full md:w-full lg:w-1/2 py-5">
             <p className="text-2xl lg:text-3xl font-bold py-3">
               What is RPE? </p>
@@ -39,8 +39,10 @@ function EraseButton({ menu }: { menu: JSX.Element }) {
               their RPE based set around, and then be prepared to adjust further depending on feel.
             </p>
           </div>
-          <div className="flex justify-center px-10 py-8">
-          <img src="https://images.pexels.com/photos/4793229/pexels-photo-4793229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="royalty free plates pic" className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"/>
+          <div className="flex justify-center px-10">
+            <div className="flex justify-center px-10 py-8">
+            <img src="https://images.pexels.com/photos/4793229/pexels-photo-4793229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="royalty free plates pic" className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"/>
+            </div>
           </div>
         </div>
       )}

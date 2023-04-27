@@ -3,6 +3,7 @@ import DropDown from "./dropdown";
 import onerepalgo from "./onerepalgo"
 import OneRepTable from "./onereptable";
 import '../index.css';
+import BackButton from "./backbutton";
 
 
 
@@ -11,7 +12,7 @@ function OneRepMenu() {
   const [selectSet, setSelectSet] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const Sets = () => {
-    return ["Set of 1", "Set of 2", "Set of 3", "Set of 4", "Set of 5", "Set of 6", "Set of 7", "Set of 8"];
+    return ["Set of 1", "Set of 2", "Set of 3", "Set of 4", "Set of 5", "Set of 6", "Set of 7", "Set of 8","Set of 9", "Set of 10"];
   };
 
   /** below is all the code i took from the original app to attempt to do conditionals in menu */
@@ -50,9 +51,10 @@ function OneRepMenu() {
   const oRMs = onerepalgo(selectSet, weightLifted)
   return (
 <div>
+<div>
 <p className="flex flex wrap justify-center text-white text-3xl font-bold items-top">One Rep Max Calculator</p>
     <div className="flex flex-wrap py-10 h-full lg:h-screen justify-center items-top">
-      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min ml-10 justify-center items-center">
+      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min justify-center items-center">
         <div>
         <div>
           <label className="px-2 text-white text-lg font-semibold">Weight Lifted :  </label>
@@ -101,6 +103,8 @@ function OneRepMenu() {
         </div>
       </div>
     </div>
+    </div>
+    <div className="flex flex-col items-center justify-end"><BackButton/></div>
     </div>
   );
 
