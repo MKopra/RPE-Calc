@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -9,7 +10,9 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin }) => {
   return (
     <nav className="flex justify-between items-center h-16 bg-gray-800 text-white">
       <div className="flex items-center">
-        <h1 className="ml-4 text-3xl font-bold">RepetitionMax.com</h1>
+      <Link to="/">
+        <button className="ml-4 text-3xl font-bold">RepetitionMax.com</button>
+      </Link>
       </div>
       <div className="flex items-center">
         {isLoggedIn ? (

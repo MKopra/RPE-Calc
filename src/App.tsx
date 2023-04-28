@@ -5,7 +5,7 @@ import landingPage from "./components/landingpage";
 import LandingPageElement from "./components/landingpage";
 import Navbar from "./components/navbar";
 import { useState } from "react";
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import OneRepLanding from "./components/onereplanding";
 import OneRepMenu from "./components/onerepmenu";
 import CalLanding from "./components/callanding";
@@ -26,6 +26,7 @@ function App() {
   };
 
   return (
+
     <div className="bg-gray-700 h-full">
       <header>
       <Navbar isLoggedIn={isLoggedIn} onLogin={() => handleLogin()} />
@@ -44,6 +45,7 @@ function App() {
         <br />
       </header>
     </div>
+
   );
 } //////////////// ------- add tailwind CSS ------------------
 

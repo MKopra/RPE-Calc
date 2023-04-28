@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Link, useNavigate } from "react-router-dom";
 import LandingPageElement from "./landingpage";
 
 function BackButton() {
@@ -13,7 +13,12 @@ function BackButton() {
       <button 
       onClick={handleClick} 
       className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl">
-        Back</button>
+        <p>
+            <Link to="/" className="">
+                Back
+            </Link>
+        </p>
+        </button>
 
     );
   }

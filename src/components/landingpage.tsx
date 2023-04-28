@@ -6,6 +6,7 @@ import OneRepLanding from "./onereplanding";
 import OneRepMenu from "./onerepmenu";
 import CalLanding from "./callanding";
 import CalMenu from "./calmenu";
+import { Link } from "react-router-dom";
 
 
 function LandingPage() {  
@@ -45,7 +46,7 @@ function LandingPage() {
                 <div className="text-xl lg:text-2xl font-bold py-3">1. One Rep Max Calculator</div>
                 <div className="text-md lg:text-xl">A one repetition max calculator that takes a weight lifted for a certain number of reps 1-10, and uses that to find your estimated repetition maxes. </div>
                 <div className="text-xl lg:text-2xl font-bold py-3">2. RPE Calculator</div>
-                <div className="text-md lg:text-xl">An RPE calculator that takes your repetition maxes, and uses them to provide you with Rate of Perceived Exertion prescriptions upt to a set of 8, and out to RPE 5. </div>
+                <div className="text-md lg:text-xl">An RPE calculator that takes your repetition maxes, and uses them to provide you with Rate of Perceived Exertion prescriptions up to a set of 8, and out to RPE 5. </div>
                 <div className="text-xl lg:text-2xl font-bold py-3">3. Weighted Calesthenics Calculator </div>
                 <div className="text-md lg:text-xl">A weighted Calesthenics rep max calculator. The hard part about using percentages and RPE calculations based off of percentage with weighted Calesthenics is that your bodyweight needs to be involved in the calculation, which can be a tedious process for the trainee - fret not, we've go you covered. </div>
             </div>
@@ -55,14 +56,35 @@ function LandingPage() {
       {isVisible1 && (<div className="px-2 py-2 w-full md:w-full lg:w-1/3 h-min">
             <div className="flex flex-col justify-center items-center bg-gray-600 rounded-lg shadow-md">
             <div className="py-5">
-                <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl px-5"onClick={() => handleClick1("onerepmax")}>One Rep Max Calculator</button>
+                <p>
+                <Link to="/onerepmax-landing">
+                <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl px-5"onClick={() => handleClick1("onerepmax")}>
+                    One Rep Max Calculator
+                    </button>
+                </Link>
+                </p>
+
             </div>
                 <div className="py-5">
-                {isVisible1 &&<button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl px-5"onClick={() => handleClick2("rpecalc")}>RPE Calculator</button>}
+                {isVisible1 &&
+                <Link to="/rpe-landing">
+                <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl px-5"onClick={() => handleClick2("rpecalc")}>
+                    RPE Calculator
+                </button>                
+                </Link>
+                }
                 {!isVisible1}
                 </div>
-                <div className="py-5 flex justify-center">
-                {isVisible1 &&<button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-2 rounded-md shadow-md hover:bg-gray-600 text-xl w-3/4"onClick={() => handleClick3("cal")}>Weighted Calesthenics Calculator</button>}
+                <div>
+                {isVisible1 &&
+                <div className="py-5 flex flex-col justify-center items-center">
+                <Link to="/cal-landing">
+                <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-2 rounded-md shadow-md hover:bg-gray-600 text-xl w-full"onClick={() => handleClick3("cal")}>
+                Weighted Calesthenics Calculator  
+                </button>              
+                </Link>
+                </div>
+                }
                 {!isVisible1}
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import '../index.css';
 import CalMenu from "./calmenu";
+import { Link } from "react-router-dom";
 
 function CalLanding({ CalMenu }: { CalMenu: JSX.Element }) {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -29,11 +30,16 @@ function CalLanding({ CalMenu }: { CalMenu: JSX.Element }) {
         </div>
       )}
       <div className="flex items-center justify-center py-7">
-      {isVisible && <button 
+      {isVisible && <p>
+        <Link to="/cal-calc">
+        <button 
       onClick={handleClick} 
       className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-4 px-5 rounded-md shadow-md hover:bg-gray-600 text-xl">
-        Get Started
-      </button>}
+          Get Started 
+          </button>       
+        </Link>
+        </p>
+      }
       {!isVisible && CalMenu}
       </div>
     </>
