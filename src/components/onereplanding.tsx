@@ -2,6 +2,7 @@ import { useState } from "react";
 import '../index.css';
 import OneRepMenu from "./onerepmenu";
 import { Link } from "react-router-dom";
+import handleImageLoad from "./compressimage";
 
 function OneRepLanding({ OneRepMenu }: { OneRepMenu: JSX.Element }) {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -28,7 +29,11 @@ Knowing your 1RM can be helpful in setting goals and creating workout plans that
           </div>
           <div className="px-10">
             <div className="flex justify-center px-10 py-8">
-            <img src="https://images.pexels.com/photos/4164468/pexels-photo-4164468.jpeg" alt="royalty free plates pic" className="w-full md:max-w-md lg:max-w-lg md:w-full sm:w-full rounded-md object-cover"/>
+            <img src="https://images.pexels.com/photos/4164468/pexels-photo-4164468.jpeg" 
+            alt="royalty free plates pic" 
+            className="w-full md:max-w-md lg:max-w-lg md:w-full sm:w-full rounded-md object-cover"
+            onLoad={handleImageLoad}
+            />
             </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import '../index.css';
 import { Link } from "react-router-dom";
+import handleImageLoad from "./compressimage";
+
 
 function EraseButton({ menu }: { menu: JSX.Element }) {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -42,7 +44,9 @@ function EraseButton({ menu }: { menu: JSX.Element }) {
           </div>
           <div className="flex justify-center px-10">
             <div className="flex justify-center px-10 py-8">
-            <img src="https://images.pexels.com/photos/4793229/pexels-photo-4793229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="royalty free plates pic" className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"/>
+            <img src="https://images.pexels.com/photos/4793229/pexels-photo-4793229.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="royalty free plates pic" 
+            className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"
+            onLoad={handleImageLoad}/>
             </div>
           </div>
         </div>

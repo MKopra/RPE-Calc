@@ -7,6 +7,8 @@ import OneRepMenu from "./onerepmenu";
 import CalLanding from "./callanding";
 import CalMenu from "./calmenu";
 import { Link } from "react-router-dom";
+import handleImageLoad from "./compressimage";
+
 
 
 function LandingPage() {  
@@ -15,7 +17,8 @@ function LandingPage() {
     const [isEraseButtonVisible, setIsEraseButtonVisible] = useState(false);
     const [isCalVisible, setIsCalVisible] = useState(false);
 
-
+    const imageUrl = "https://images.pexels.com/photos/4608124/pexels-photo-4608124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
+    
     const handleClick1 = (element: string) => {
         setIsVisible1(false);
         setIsOneRepVisible(true);
@@ -89,7 +92,11 @@ function LandingPage() {
                 </div>
             </div>
             {isVisible1 &&<div className="flex justify-center px-10 py-8">
-          <img src="https://images.pexels.com/photos/4608124/pexels-photo-4608124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="royalty free plates pic" className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"/>
+          <img src={imageUrl} 
+          alt="royalty free plates pic" 
+          className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"
+          onLoad={handleImageLoad}
+          />
           </div>}
           <div className="fixed z-50" id="dialog-container"></div>
         </div>

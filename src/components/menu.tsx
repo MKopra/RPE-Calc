@@ -1,155 +1,178 @@
 import React, { useState, ChangeEvent } from "react";
-import DropDown from "./dropdown";
-import algo from "./algo"
-import OutputTable from "./outputtable";
-import '../index.css';
+import CalculatorTab from "./CalcTab";
 import BackButton from "./backbutton";
 
 
-
-
 function Menu() {
-  const [selectSet, setSelectSet] = useState<string>("");
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const Sets = () => {
-    return ["Set of 1", "Set of 2", "Set of 3", "Set of 4", "Set of 5", "Set of 6", "Set of 7", "Set of 8"];
+  const [tabs, setTabs] = useState<number[]>([]);
+  const [nextTabId, setNextTabId] = useState(1);
+  const [tabInputs, setTabInputs] = useState<{ [key: number]: any }>({});
+  const [visibleTab, setVisibleTab] = useState<number | null>(null);
+  const [exerciseNames, setExerciseNames] = useState<{ [key: number]: string }>({});
+
+  const toggleTabVisibility = (tabId: number) => {
+    setVisibleTab(tabId === visibleTab ? null : tabId);
   };
 
-  /** below is all the code i took from the original app to attempt to do conditionals in menu */
-  const [onerepmax, setOneRM] = useState(Number);
-  const handleOneRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setOneRM(+e.target.value);
-  }
-  const [tworepmax, setTwoRM] = useState(Number);
-  const handleTwoRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTwoRM(+e.target.value);
-  }
-  const [threerepmax, setThreeRM] = useState(Number);
-  const handleThreeRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setThreeRM(+e.target.value);
-  }
-  const [fourrepmax, setFourRM] = useState(Number);
-  const handleFourRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFourRM(+e.target.value);
-  }
-  const [fiverepmax, setFiveRM] = useState(Number);
-  const handleFiveRMChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFiveRM(+e.target.value);
-  }
-  /**
-   * Toggle the drop down menu
-   */
-  const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
+  const handleCloseTab = (tabId:number) => {
+    // Remove the tab from the tabs state
+    const updatedTabs = tabs.filter((id) => id !== tabId);
+    setTabs(updatedTabs);
+
+    // Remove the corresponding input values from the tabInputs state
+    const updatedTabInputs = { ...tabInputs };
+    delete updatedTabInputs[tabId];
+    setTabInputs(updatedTabInputs);
+    const updatedExerciseNames = { ...exerciseNames };
+    delete updatedExerciseNames[tabId];
+    setExerciseNames(updatedExerciseNames);
   };
 
-  /**
-   * Hide the drop down menu if click occurs
-   * outside of the drop-down element.
-   *
-   * @param event  The mouse event
-   */
-  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    if (event.currentTarget === event.target) {
-      setShowDropDown(false);
-    }
-  };
-  /**
-   * Callback function to consume the
-   * Set name from the child component
-   *
-   * @param Set  The selected Set
-   */
-  const SetSelection = (Set: string): void => {
-    setSelectSet(Set);
+  const handleExerciseNameChange = (value: string, tabId: number) => {
+    const name = value;
+    setExerciseNames((prevExerciseNames) => ({
+      ...prevExerciseNames,
+      [tabId]: name,
+    }));
   };
 
-  const RMs = algo(onerepmax, tworepmax, threerepmax, fourrepmax, fiverepmax)
+  const handleOneRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number) => {
+    setTabInputs((prevInputs) => ({
+      ...prevInputs,
+      [tabId]: {
+        ...prevInputs[tabId],
+        oneRepMax: +e.target.value,
+      },
+    }));
+  };
+
+  const handleTwoRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number) => {
+    setTabInputs((prevInputs) => ({
+      ...prevInputs,
+      [tabId]: {
+        ...prevInputs[tabId],
+        twoRepMax: +e.target.value,
+      },
+    }));
+  };
+
+  const handleThreeRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number) => {
+    setTabInputs((prevInputs) => ({
+      ...prevInputs,
+      [tabId]: {
+        ...prevInputs[tabId],
+        threeRepMax: +e.target.value,
+      },
+    }));
+  };
+
+  const handleFourRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number) => {
+    setTabInputs((prevInputs) => ({
+      ...prevInputs,
+      [tabId]: {
+        ...prevInputs[tabId],
+        fourRepMax: +e.target.value,
+      },
+    }));
+  };
+
+  const handleFiveRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number) => {
+    setTabInputs((prevInputs) => ({
+      ...prevInputs,
+      [tabId]: {
+        ...prevInputs[tabId],
+        fiveRepMax: +e.target.value,
+      },
+    }));
+  };
+
+  const addTab = () => {
+    setTabs((prevTabs) => [...prevTabs, nextTabId]);
+    setTabInputs((prevInputs) => ({
+      ...prevInputs,
+      [nextTabId]: {
+        oneRepMax: 0,
+        twoRepMax: 0,
+        threeRepMax: 0,
+        fourRepMax: 0,
+        fiveRepMax: 0,
+      },
+    }));
+    setExerciseNames((prevExerciseNames) => ({
+      ...prevExerciseNames,
+      [nextTabId]: `Exercise ${nextTabId}`,
+    }));
+    setNextTabId((prevId) => prevId + 1);
+  };
+
+  const deleteTab = (tabId: number) => {
+    setTabs((prevTabs) => prevTabs.filter((id) => id !== tabId));
+    setTabInputs((prevInputs) => {
+      const updatedInputs = { ...prevInputs };
+      delete updatedInputs[tabId];
+      return updatedInputs;
+    });
+    setExerciseNames((prevExerciseNames) => {
+      const updatedExerciseNames = { ...prevExerciseNames };
+      delete updatedExerciseNames[tabId];
+      return updatedExerciseNames;
+    });
+  };
+  console.log(exerciseNames);
+
   return (
-<div>
-    <div className="flex flex-wrap py-10 h-full lg:h-screen justify-center items-top">
-      <div className="bg-gray-600 p-6 rounded-lg shadow-md h-min justify-center items-center">
-        <div>
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">1 Rep Max :  </label>
-          <input className="rounded-md" type="number" value={onerepmax === 0 ? '' : onerepmax} onChange={handleOneRMChange} />
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">2 Rep Max :  </label>
-          <input className="rounded-md" type="number" value={tworepmax === 0 ? '' : tworepmax} onChange={handleTwoRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">3 Rep Max :  </label>
-          <input className="rounded-md" type="number" value={threerepmax === 0 ? '' : threerepmax} onChange={handleThreeRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">4 Rep Max :  </label>
-          <input className="rounded-md" type="number" id="fourrepmax" value={fourrepmax === 0 ? '' : fourrepmax} onChange={handleFourRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <label className="px-2 text-white text-lg font-semibold">5 Rep Max :  </label>
-          <input className="rounded-md" type="number" id="fiverepmax" value={fiverepmax === 0 ? '' : fiverepmax} onChange={handleFiveRMChange}>
-          </input>
-          <br />
-        </div>
-        <br />
-        <div>
-          <div className="py-2 text-white text-lg font-semibold">
-            {selectSet
-              ? ``
-              : "Select the number of repetitions in your set"}
-          </div>
-        </div>
-        </div>
-        <div>
+    <div className="min-h-screen">
+      <div className="flex items-center py-2 bg-gray-600">
+        <h2 className="text-3xl text-white font-semibold pr-10 pl-3">Exercise Library</h2>
         <button
-  className={`bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded-md shadow-md ${showDropDown ? "active" : ""}`}
-  onClick={(): void => toggleDropDown()}
-          onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-            dismissHandler(e)
-          }
+          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-md shadow-md"
+          onClick={addTab}
         >
-          <button
-          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-2 rounded-md shadow-md hover:bg-gray-600 active:outline-none">{selectSet ? "Selected: " + selectSet : "Select ..."} </button>
-          {showDropDown && (
-            <DropDown
-              Sets={Sets()}
-              showDropDown={false}
-              toggleDropDown={(): void => toggleDropDown()}
-              SetSelection={SetSelection}
-            />
-          )}
+          Add Exercise
         </button>
-        <br />
-        <br />
-        </div>
+        <div className="flex flex-grow justify-end"> <BackButton/></div>
       </div>
-      <div className="px-4 lg:px-20">
-        <div className="py-10">
-          <div className="justify-center py-5 items-start bg-white rounded-md shadow-md font-semibold h-min">
-            <OutputTable
-              selectSet={selectSet}
-              RMs={RMs} />
-          </div>
+      <div className="flex">
+        <div className="w-1/6  bg-gray-600 min-h-screen">
+          <ul>
+            {tabs.map((tabId) => (
+              <li key={tabId} className="border border-black">
+                <button
+                  className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-2 shadow-md w-full justify-center"
+                  onClick={() => toggleTabVisibility(tabId)}
+                >
+                  {exerciseNames[tabId]}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </div>
-    <div className="flex flex-col items-center justify-end"><BackButton/></div>
+        <div className="w-3/4">
+          {tabs.map((tabId) => (
+            <div
+            key={tabId}
+            className={`px-4 ${visibleTab === tabId ? "" : "hidden"}`}>
+            <CalculatorTab
+              key={tabId}
+              tabId={tabId}
+              inputValues={tabInputs[tabId]}
+              onOneRMChange={(e) => handleOneRMChange(e, tabId)}
+              onTwoRMChange={(e) => handleTwoRMChange(e, tabId)}
+              onThreeRMChange={(e) => handleThreeRMChange(e, tabId)}
+              onFourRMChange={(e) => handleFourRMChange(e, tabId)}
+              onFiveRMChange={(e) => handleFiveRMChange(e, tabId)}
+              onCloseTab={() => handleCloseTab(tabId)}
+              exerciseNames = {exerciseNames[tabId]}
+              onExerciseNameChange={handleExerciseNameChange}
+            />
+            </div>
+          ))}
+
+            </div>
+            </div>
+ 
     </div>
   );
-
-};
-
+}
 
 export default Menu;

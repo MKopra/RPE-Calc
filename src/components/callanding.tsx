@@ -2,6 +2,8 @@ import { useState } from "react";
 import '../index.css';
 import CalMenu from "./calmenu";
 import { Link } from "react-router-dom";
+import handleImageLoad from "./compressimage";
+
 
 function CalLanding({ CalMenu }: { CalMenu: JSX.Element }) {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -25,7 +27,10 @@ function CalLanding({ CalMenu }: { CalMenu: JSX.Element }) {
             </p>
           </div>
           <div className="flex justify-center px-10 py-8">
-          <img src="https://images.pexels.com/photos/14019139/pexels-photo-14019139.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="royalty free plates pic" className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"/>
+          <img src="https://images.pexels.com/photos/14019139/pexels-photo-14019139.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+          alt="royalty free plates pic" 
+          className="w-full md:max-w-md lg:max-w-lg md:w-full rounded-md object-cover"
+          onLoad={handleImageLoad}/>
           </div>
         </div>
       )}
