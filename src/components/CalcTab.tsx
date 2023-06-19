@@ -90,7 +90,7 @@ const toggleDropDown = () => {
       <div className="flex flex-row justify-between mb-2">
         <input
         type="text"
-        className="text-2xl text-white font-bold bg-gray-700"
+        className="text-2xl text-white font-bold bg-gray-700 border border-white"
         value={exerciseName}
         onChange={(e) => setExerciseName(e.target.value)}
         onBlur={handleExerciseNameBlur}

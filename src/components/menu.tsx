@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent } from "react";
 import CalculatorTab from "./CalcTab";
 import BackButton from "./backbutton";
+import axios from 'axios';
+
 
 
 function Menu() {
@@ -118,9 +120,46 @@ function Menu() {
       return updatedExerciseNames;
     });
   };
-  console.log(exerciseNames);
+  //console.log(exerciseNames);
+  //console.log(tabInputs)
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    //console.log(tabInputs);
+    //console.log(exerciseNames);
+  
+    const data = {
+      tabInputs,
+      exerciseNames,
+    };
+    //console.log('Data:', data); // Add this line to log the data before sending the request
+  
+    try {
+      const response = await fetch('http://127.0.0.1:8000/rpe-calc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      // Handle the response as needed
+      console.log('Response:', response);
+    } catch (error) {
+      // Handle the error
+      console.error('Error submitting form:', error);
+    }
+
+    fetch('http://127.0.0.1:8000/rpe-calc', {
+      method: 'GET',
+    }).then(response => response.json()).then(response => console.log(response))
+
+  };
+  
+
 
   return (
+    <form onSubmit={handleSubmit}>
     <div className="min-h-screen">
       <div className="flex items-center py-2 bg-gray-600">
         <h2 className="text-3xl text-white font-semibold pr-10 pl-3">Exercise Library</h2>
@@ -130,6 +169,13 @@ function Menu() {
         >
           Add Exercise
         </button>
+          <div className="pl-10">
+            <button 
+            type='submit' 
+            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-md shadow-md">
+            Save
+            </button>
+          </div>
         <div className="flex flex-grow justify-end"> <BackButton/></div>
       </div>
       <div className="flex">
@@ -172,6 +218,7 @@ function Menu() {
             </div>
  
     </div>
+    </form>
   );
 }
 
