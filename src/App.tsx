@@ -1,4 +1,3 @@
-import Menu from "./components/menu";
 import EraseButton from './components/erasebutton';
 import './index.css';
 import landingPage from "./components/landingpage";
@@ -11,7 +10,7 @@ import OneRepMenu from "./components/onerepmenu";
 import CalLanding from "./components/callanding";
 import CalMenu from "./components/calmenu";
 import RoutesApp from "./components/routes";
-
+import Menu from "./components/menu";
 
 
 

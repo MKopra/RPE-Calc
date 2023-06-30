@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pymongo import MongoClient
+from exercises import read_exercise_data, create_or_update
 
 import users
 
@@ -15,16 +16,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+class ExerciseDatum(BaseModel):
+    name: str
+    maxes: list[float]
 
-class ExerciseData(BaseModel):
-    exerciseNames: dict
-    tabInputs: dict
+class InputData(BaseModel):
+    user_id: str
+    exercise_data: list[ExerciseDatum]
 
 
 class CreateUserData(BaseModel):
     username: str
     password: str
     email: str
+
+#class UserID(BaseModel):
+ #   uuid: str
 
 database = 'rpe-calc' 
 
@@ -35,31 +42,15 @@ client = MongoClient(uri)
 
 db = client[database]
 
-collection = db['users']
+user_collection = db['users']
+exercise_collection = db['exercises']
  
-@app.post('/rpe-calc')
-async def process_data(data: ExerciseData):
-    exerciseNames = data.exerciseNames
-    tabInputs = data.tabInputs
-    print(exerciseNames)
-    print(tabInputs)
-    # Perform further processing with the received data
-    # ...
-    document = {
-        "exerciseNames": exerciseNames,
-        "tabInputs": tabInputs
-    }
-    result = collection.insert_one(document)
-    print(f"Inserted document ID: {result.inserted_id}")
-    #client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017')
+@app.post("/exercises/{user_id}")
+async def process_data(user_id: str, input_data: InputData): #user_data: CreateUserData):
+    print("provided user_id",user_id)
+    print("provided input_data", input_data)
+    create_or_update(user_id, input_data) ###### next step lets try ipython
 
-    return {'message': 'Data received successfully'}
-
-@app.get('/rpe-calc')
-async def get_data():
-    print("YOLO")
-    one = collection.find_one()
-    return {"success": one["exerciseNames"]}
 
 @app.options("/rpe-calc")
 async def options(request: Request):
@@ -72,7 +63,12 @@ async def options(request: Request):
     return JSONResponse(content={}, headers=headers)
 
 
-@app.post("/create-user")
+@app.post("/login") #### changed to /login
 def create_user_endpoint(data: CreateUserData):
     uuid = users.create_user(data.username, data.password, data.email)
     return {"UUID": uuid}
+
+
+@app.get("/exercises/{user_id}")
+def read_exercises(user_id: str):
+    return read_exercise_data(user_id)

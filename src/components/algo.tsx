@@ -1,4 +1,4 @@
-function algo(onerepmax: number, tworepmax: number, threerepmax: number, fourrepmax: number, fiverepmax: number) {
+function algo(onerepmax: any, tworepmax: any, threerepmax: any, fourrepmax: any, fiverepmax: any) {
     const multip = [1.0, 0.94, 0.91, 0.883, 0.86, 0.833, 0.803, 0.777, 0.753, 0.733, 0.7, 0.67, 0.65]
     let RMs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -39,6 +39,8 @@ function algo(onerepmax: number, tworepmax: number, threerepmax: number, fourrep
     
     for (let i = 0; i < RMs.length; i++)
         RMs[i] = parseFloat(RMs[i].toFixed(1))
+        //console.log("RMs",RMs)
+
     
     return RMs
 }

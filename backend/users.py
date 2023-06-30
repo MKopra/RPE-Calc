@@ -1,6 +1,6 @@
 import hashlib
 
-from db import get_database
+from database import get_database
 
 database = get_database()
 collection = database["users"]

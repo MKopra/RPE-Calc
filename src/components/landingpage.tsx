@@ -1,4 +1,3 @@
-import Menu from "./menu";
 import EraseButton from './erasebutton';
 import { useState } from 'react';
 import { Dialog, DialogContent } from "@mui/material";
@@ -8,6 +7,7 @@ import CalLanding from "./callanding";
 import CalMenu from "./calmenu";
 import { Link } from "react-router-dom";
 import handleImageLoad from "./compressimage";
+import Menu from "./menu";
 
 
 
