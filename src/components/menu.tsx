@@ -10,9 +10,10 @@ interface ExerciseDatum {
     maxes: number[];
 }
 
-interface OutputData {
+interface InputDataWithDate {
     user_id: string;
     exercise_data: ExerciseDatum[];
+    created_at: Date
 }
 
 function Menu() {
@@ -79,9 +80,10 @@ function Menu() {
 
     const handleSaveClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         if (User !== undefined) {
-        const data: OutputData = {
+        const data: InputDataWithDate = {
             user_id: User,
             exercise_data: exerciseData,
+            created_at: new Date(),
         };
             event.preventDefault();
             try {

@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from pymongo import MongoClient
 from exercises import read_exercise_data, create_or_update
 from users import auth_user, login_uuid
+from datetime import datetime
 
 import users
 
@@ -25,18 +26,15 @@ class InputData(BaseModel):
     user_id: str
     exercise_data: list[ExerciseDatum]
 
+class InputDataWithDate(BaseModel):
+    user_id: str
+    exercise_data: list[ExerciseDatum]
+    created_at: datetime
 
 class CreateUserData(BaseModel):
     username: str
     password: str
     email: str
-
-# class AuthData(BaseModel):
-#     username: str
-#     password: str
-
-#class UserID(BaseModel):
- #   uuid: str
 
 database = 'rpe-calc' 
 
@@ -51,10 +49,10 @@ user_collection = db['users']
 exercise_collection = db['exercises']
  
 @app.post("/exercises/{user_id}")
-async def process_data(user_id: str, input_data: InputData): #user_data: CreateUserData):
-    print("provided user_id",user_id)
+async def process_data(input_data: InputDataWithDate): #user_data: CreateUserData):
+    print("provided user_id",input_data.user_id)
     print("provided input_data", input_data)
-    create_or_update(user_id, input_data) ###### next step lets try ipython
+    create_or_update(input_data) ###### next step lets try ipython
 
 
 @app.options("/rpe-calc")
