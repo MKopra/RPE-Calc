@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export var USER: any = "6498904c419d284a1cff301a"
+//export var USER: undefined
 
 const BASE_URL = 'http://127.0.0.1:8000';
 

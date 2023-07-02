@@ -2,7 +2,8 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import CalculatorTab from "./CalcTab";
 import BackButton from "./backbutton";
 import axios from 'axios';
-import { USER, fetchData } from './utils';
+import { fetchData } from './utils';
+import { User } from "./login";
 
 interface ExerciseDatum {
     name: string;
@@ -10,8 +11,8 @@ interface ExerciseDatum {
 }
 
 interface OutputData {
-    user_id: string
-    exercise_data: ExerciseDatum[]
+    user_id: string;
+    exercise_data: ExerciseDatum[];
 }
 
 function Menu() {
@@ -22,6 +23,8 @@ function Menu() {
         { name: "Exercise 1", maxes: [0, 0, 0, 0, 0] }
     ]);
     const [exerciseNames, setExerciseNames] = useState<string[]>(exerciseData.map((exercise) => exercise.name));
+    const [message, setMessage] = useState<string>("");
+
 
     useEffect(() => {
         const newTabIndex = tabs.indexOf(visibleTab);
@@ -31,31 +34,30 @@ function Menu() {
       }, [visibleTab, tabs]);      
       
 
-    const handleClick = async () => {
-        if (USER !== undefined) {
+    const handleClick = async () => { ///// handleLoadData
+        if (typeof User === 'string' && User.length === 24) {
             try {
-                const data = await fetchData(USER);
+                console.log("handleclick user print",User)
+                const data = await fetchData(User);
                 setExerciseData(data.exercise_data);
                 setExerciseNames(data.exercise_data.map((item: { name: string }) => item.name));
                 console.log('exerciseData', exerciseData)
                 console.log("exercise_data ie everything", data)
                 const initialTabs = Array.from({ length: data.exercise_data.length }, (_, index) => index);
                 setTabs(initialTabs);
+                setMessage('')
             } catch (error) {
                 console.error('Error loading data:', error);
             }
         }
+        else {
+            setMessage("Please login to save or load data");
+          }
     };
 
     const toggleTabVisibility = (tabIndex: number) => {
         setVisibleTab(tabIndex);
         setTabIndex(tabIndex); // Set the tabIndex state to the clicked tab index
-
-
-        console.log("tabs", tabs)
-        console.log("Visible Tab", visibleTab)
-        console.log("tab name", exerciseNames[tabIndex])
-        console.log("tabindex", tabIndex)
     };
 
     const addTab = () => {
@@ -75,36 +77,35 @@ function Menu() {
         ]);
     };
 
-    const data: OutputData = {
-        user_id: USER,
-        exercise_data: exerciseData,
-    };
-
-    const handleSubmit = (data: OutputData) => async (
-        event: React.MouseEvent<HTMLButtonElement>
-    ) => {
-        event.preventDefault();
-
-        try {
-            console.log("data being submitted to API:", data)
-            const response = await fetch('http://127.0.0.1:8000/exercises/' + USER, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            // Handle the response as needed
-            console.log('Response:', response);
-        } catch (error) {
-            // Handle the error
-            console.error('Error submitting form:', error);
+    const handleSaveClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (User !== undefined) {
+        const data: OutputData = {
+            user_id: User,
+            exercise_data: exerciseData,
+        };
+            event.preventDefault();
+            try {
+                console.log("data being submitted to API:", data)
+                const response = await fetch('http://127.0.0.1:8000/exercises/' + User, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+    
+                // Handle the response as needed
+                console.log('Response:', response);
+            } catch (error) {
+                // Handle the error
+                console.error('Error submitting form:', error);
+            }
+            setMessage('')
         }
+        else {setMessage("Please login to save or load data")} 
     };
 
-    // Usage:
-    const handleSaveClick = handleSubmit(data);
+        
     const handleCloseTab = (tabIndex: number) => {
         // Find the corresponding tab ID in the tabs state
         const tabId = tabs[tabIndex];
@@ -141,12 +142,7 @@ function Menu() {
         setExerciseData(updatedExerciseData);
         setExerciseNames(updatedExerciseNames);
       };
-      
-      
-      
-    console.log(tabs)
-
-
+    
     return (
         <div className="min-h-screen">
             <div className="flex items-center py-2 bg-gray-600">
@@ -172,6 +168,7 @@ function Menu() {
                         className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-md shadow-md">
                         Load Data
                     </button>
+                    {message && <span className="text-white font-bold py-2 px-3 ">{message}</span>}
                 </div>
                 <div className="flex flex-grow justify-end"> <BackButton /></div>
             </div>
@@ -198,15 +195,11 @@ function Menu() {
 
                             <CalculatorTab
                                 tabId={tabIndex}
-                                tabsProp={tabs}
                                 exercise_data={exerciseData}
                                 exerciseNames={exerciseNames}
-                                //exerciseMaxes={exerciseMaxes}
                                 setExerciseData={setExerciseData}
                                 setExerciseNames={setExerciseNames}
-                                setTabsProp={setTabs}
                                 handleCloseTab={() => handleCloseTab(tabIndex)}
-                                //setExerciseMaxes={setExerciseMaxes}
                             />
                         </div>
                     ))}

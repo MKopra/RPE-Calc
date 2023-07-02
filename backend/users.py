@@ -34,3 +34,15 @@ def auth_user(username: str, password: str):
         raise Exception(f"More than one user with username: {username}!")
 
     return _hash_password(password) == results[0]["hashed_password"]
+
+def login_uuid(username: str):
+    query = {"username": username}
+    results = collection.find(query)
+    user = next(results, None)  # Get the first document from the cursor
+    if user:
+        return str(user["_id"])  # Access the _id field of the user document
+    else:
+        return None
+
+            
+        

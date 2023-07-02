@@ -10,23 +10,19 @@ interface ExerciseDatum {
 
 interface CalculatorTabProps {
   tabId: number;
-  tabsProp: number[];
   exercise_data: ExerciseDatum[];
   exerciseNames: string[];
   setExerciseData: (exerciseData: ExerciseDatum[]) => void;
   setExerciseNames: (names: string[]) => void;
-  setTabsProp: (tabsProp: number[]) => void;
   handleCloseTab: (tabId: number) => void;
 }
 
 const CalculatorTab: React.FC<CalculatorTabProps> = ({
   tabId,
-  tabsProp,
   exercise_data,
   exerciseNames,
   setExerciseData,
   setExerciseNames,
-  setTabsProp,
   handleCloseTab
 }) => {
   const [exerciseName, setExerciseName] = useState<string>(exerciseNames[tabId]);
@@ -145,34 +141,6 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
       setFiveRepMax(value)
     }
   };
-  
-  // const handleCloseTab = (tabId: number) => {
-  //   // Find the corresponding tab ID in the tabs state
-  //   const closeTabId = tabsProp[tabId];
-  
-  //   // Remove the tab from the tabs state
-  //   const updatedTabs = tabsProp.filter((id) => id !== closeTabId);
-  //   setTabsProp(updatedTabs);
-  
-  //   // Find the index of the tab ID within the exerciseData state
-  //   //const exerciseDataIndex = exerciseData[tabId].index;
-  
-  //   if (closeTabId !== -1) {
-  //     // Remove the corresponding exercise data from the exerciseData state
-  //     const updatedExerciseData = [...exercise_data];
-  //     updatedExerciseData.splice(closeTabId, 1);
-  //     setExerciseData(updatedExerciseData);
-  //     const updatedMaxes = updatedExerciseData.map((exercise_data) => exercise_data.maxes);
-  //     const flattenedMaxes = updatedMaxes.flat(); // Flatten the 2D array
-  //     setMaxes(flattenedMaxes);
-  //   }
-  
-  //   // Remove the corresponding exercise name from the exerciseNames state
-  //   const updatedExerciseNames = [...exerciseNames];
-  //   updatedExerciseNames.splice(closeTabId, 1);
-  //   setExerciseNames(updatedExerciseNames);
-    
-  // };
 
   const handleExerciseNameBlur = () => {
     handleExerciseNameChange(exerciseName, tabId);
@@ -183,21 +151,6 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const Sets = () => {
     return ["Set of 1", "Set of 2", "Set of 3", "Set of 4", "Set of 5", "Set of 6", "Set of 7", "Set of 8"];
   };
-  //var maxesIndex = tabsProp[tabId]+1
-  //var maxes: number[] = exercise_data[tabId].maxes
-  //console.log("exercise_data",exercise_data)
-  //console.log("maxes:",maxes)
-  // var onerepmax = exercise_data[tabId].maxes[0]
-  // var tworepmax = exercise_data[tabId].maxes[1]
-  // var threerepmax = exercise_data[tabId].maxes[2]
-  // var fourrepmax = exercise_data[tabId].maxes[3]
-  // var fiverepmax = exercise_data[tabId].maxes[4]
-  //  console.log("exercise_data.maxes",exercise_data[tabId].maxes)
-   //console.log('tabId:', tabId, 'maxes', maxes)
-  // console.log("tabId:", tabId, "onerepmax calctab:", onerepmax)
-  // console.log("tabId:", tabId,"tworepmax calctab:",tworepmax)
-  // console.log("tabId:", tabId,"threerepmax calctab:",threerepmax)
-  // console.log("tabId:", tabId,"fourrepmax calctab:",fourrepmax)
 
   const RMs = algo(onerepmax, tworepmax, threerepmax, fourrepmax, fiverepmax)
 
@@ -212,35 +165,6 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const SetSelection = (Set: string): void => {
     setSelectSet(Set);
   };
-
-  // const [savedOneRepMax, setSavedOneRepMax] = useState<number>(0);
-  // const [savedTwoRepMax, setSavedTwoRepMax] = useState<number>(0);
-  // const [savedThreeRepMax, setSavedThreeRepMax] = useState<number>(0);
-  // const [savedName, setSavedName] = useState<string>("");
-  // const [inputModified, setInputModified] = useState(false);
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('http://127.0.0.1:8000/rpe-calc');
-  //       const result = await response.json();
-  //       setSavedName(result.exerciseNames)
-  //       setSavedOneRepMax(result.oneRepMax);
-  //       setSavedTwoRepMax(result.twoRepMax);
-  //       setSavedThreeRepMax(result.threeRepMax);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  //console.log("saveName:", savedName)
-  //console.log("saved1rm:", savedOneRepMax);
-  //console.log("saved2rm:", savedTwoRepMax);
-  //console.log("saved3rm:", savedThreeRepMax);
 
   return (
     <div className="pb-10">

@@ -30,13 +30,16 @@ def create_or_update(user_id: str, input_data: InputData):
 def read_exercise_data(user_id: str):
     exercises_collection = get_exercises_collection()
     result_data = exercises_collection.find_one({"user_id": user_id})
-    
-    del result_data["_id"]
-    del result_data["user_id"]
-    # result = result_data["exercise_data"]
-    # names = []
-    # for i in range(len(result)):
-    #     names.append(result[i]['name'])
-    # return names
+    if result_data:
+        del result_data["_id"]
+        del result_data["user_id"]
+        # result = result_data["exercise_data"]
+        # names = []
+        # for i in range(len(result)):
+        #     names.append(result[i]['name'])
+        # return names
 
-    return result_data
+        return result_data
+    else:
+        print("user has no saved data")
+        return {"user has no saved data"}

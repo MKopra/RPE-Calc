@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pymongo import MongoClient
 from exercises import read_exercise_data, create_or_update
+from users import auth_user, login_uuid
 
 import users
 
@@ -12,9 +13,9 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["http://localhost:3000"],  # Replace with your frontend domain
+    allow_methods=["GET", "POST", "OPTIONS"],  # Add other allowed methods if needed
+    allow_headers=["Content-Type"],  # Add other allowed headers if needed
 )
 class ExerciseDatum(BaseModel):
     name: str
@@ -29,6 +30,10 @@ class CreateUserData(BaseModel):
     username: str
     password: str
     email: str
+
+# class AuthData(BaseModel):
+#     username: str
+#     password: str
 
 #class UserID(BaseModel):
  #   uuid: str
@@ -63,7 +68,7 @@ async def options(request: Request):
     return JSONResponse(content={}, headers=headers)
 
 
-@app.post("/login") #### changed to /login
+@app.post("/create-account") #### changed to /login
 def create_user_endpoint(data: CreateUserData):
     uuid = users.create_user(data.username, data.password, data.email)
     return {"UUID": uuid}
@@ -72,3 +77,18 @@ def create_user_endpoint(data: CreateUserData):
 @app.get("/exercises/{user_id}")
 def read_exercises(user_id: str):
     return read_exercise_data(user_id)
+
+@app.post("/login")
+async def login_user(request: Request):
+    data = await request.json()
+    username = data.get("username")
+    print("username:",username)
+    password = data.get("password")
+    print("password:",password)
+    if auth_user(username, password):
+        print("auth success")
+        return login_uuid(username=username)
+    else:
+        print("auth failed")
+        return {"login failed"}
+

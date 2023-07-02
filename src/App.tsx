@@ -11,10 +11,10 @@ import CalLanding from "./components/callanding";
 import CalMenu from "./components/calmenu";
 import RoutesApp from "./components/routes";
 import Menu from "./components/menu";
+import  Login  from './components/login';
+import { handleLogout } from './components/login';
 
-
-
-
+export let User: string | undefined = "";
 
 
 function App() {
@@ -23,13 +23,35 @@ function App() {
     console.log('Login clicked');
     // handle login logic here
   };
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
+  const handleOpenLogin = () => {
+    setIsLoginOpen(true);
+  };
+  
+  const handleCloseLogin = () => {
+    setIsLoginOpen(false);
+  };
+  
   return (
 
     <div className="bg-gray-700 h-full">
       <header>
-      <Navbar isLoggedIn={isLoggedIn} onLogin={() => handleLogin()} />
-        <div>
+      <Navbar 
+      isLoginOpen={isLoginOpen} 
+      setIsLoginOpen={setIsLoginOpen} 
+      logout={handleLogout} 
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn} />
+      <div>
+      {isLoginOpen && (
+      <Login 
+      isLoginOpen={isLoginOpen} 
+      setIsLoginOpen={setIsLoginOpen} 
+      logout={handleLogout} 
+      setIsLoggedIn={setIsLoggedIn} />
+      )}
+        <div className={`app-content ${isLoginOpen ? "blur" : ""}`}>
           <Routes>
             <Route path='/' element={LandingPageElement}/>
             <Route path='/onerepmax-landing' element={<OneRepLanding OneRepMenu={<OneRepMenu />} />}/>
@@ -39,6 +61,7 @@ function App() {
             <Route path='/cal-landing' element={<CalLanding CalMenu={<CalMenu/>} />}/>
             <Route path='/cal-calc' element={<CalMenu/>}/>
           </Routes>
+        </div>
         </div>
         <br />
         <br />
