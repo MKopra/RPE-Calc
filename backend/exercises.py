@@ -30,33 +30,23 @@ def create_or_update(input_data):
     exercises_data = []
 
     for exercise in input_data.exercise_data:
-        exercise_dict = {
-            'name': exercise.name,
-            'maxes': exercise.maxes
-        }
+        exercise_dict = {"name": exercise.name, "maxes": exercise.maxes}
         exercises_data.append(exercise_dict)
 
     data = {
-        'user_id': user_id,
-        'exercise_data': exercises_data,
-        'created_at': input_data.created_at
+        "user_id": user_id,
+        "exercise_data": exercises_data,
+        "created_at": input_data.created_at,
     }
     exercises_collection = get_exercises_collection()
     exercises_collection.insert_one(data)
 
 
-
-def read_exercise_data(user_id: str):
+def read_exercise_data(user_id):
     exercises_collection = get_exercises_collection()
-    result_data = exercises_collection.find({"user_id": user_id}).sort("_id", -1).limit(1)
-    
-    if result_data.count_documents() > 0:
-        entry = result_data[0]
-        del entry["_id"]
-        del entry["user_id"]
-        return entry
+    result_data = exercises_collection.find({"user_id": user_id}).sort("timestamp", -1).limit(1)
+    count = exercises_collection.count_documents({"user_id": user_id})
+    if count > 0:
+        return result_data[0]['exercise_data']
     else:
-        print("User has no saved data")
-        return {"user has no saved data"}
-
-
+        return None
