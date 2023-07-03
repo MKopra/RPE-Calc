@@ -10,6 +10,12 @@ interface ExerciseDatum {
   maxes: number[];
 }
 
+interface HistoryDatum {
+  name:string;
+  maxes: number[];
+  created_at: Date;
+}
+
 interface CalculatorTabProps {
   tabId: number;
   exercise_data: ExerciseDatum[];
@@ -33,6 +39,8 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const [threerepmax, setThreeRepMax] = useState<number>(exercise_data[tabId]?.maxes[2] || 0);
   const [fourrepmax, setFourRepMax] = useState<number>(exercise_data[tabId]?.maxes[3] || 0);
   const [fiverepmax, setFiveRepMax] = useState<number>(exercise_data[tabId]?.maxes[4] || 0);
+  const [showHistory, setShowHistory] = useState<boolean>(false); // New state for controlling history visibility
+
 
   useEffect(() => {
     setOneRepMax(exercise_data[tabId]?.maxes[0] || 0);
@@ -147,14 +155,23 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const handleExerciseNameBlur = () => {
     handleExerciseNameChange(exerciseName, tabId);
   };
+  const [historyEntries, setHistoryEntries] = useState<HistoryDatum[]>([]);
+  const [currentEntryIndex, setCurrentEntryIndex] = useState<number>(0);
 
   const handleHistoryClick = async () => {
     if (typeof User == 'string'){
       const data = await fetchRMHistory(User, exerciseName)
       console.log("got the history back in the FE",data)
-    
-    }
+      setHistoryEntries(data);
+      setCurrentEntryIndex(data.length - 1);
+      setShowHistory(prevShowHistory => !prevShowHistory);    }
+  };
+  const navigateToNextEntry = () => {
+    setCurrentEntryIndex((prevIndex) => prevIndex + 1);
+  };
 
+  const navigateToPreviousEntry = () => {
+    setCurrentEntryIndex((prevIndex) => prevIndex - 1);
   };
 
   const [selectSet, setSelectSet] = useState<string>("");
@@ -300,6 +317,48 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
               History
           </button>
       </div>
+      {showHistory && (
+  <div className="pt-10 flex items-center">
+    <button
+      className="p-2 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white font-bold text-xl"
+      onClick={navigateToPreviousEntry}
+      disabled={currentEntryIndex === 0}
+    >
+      {"<"}
+    </button>
+    <div className="ml-4 flex flex-col justify-center">
+      <div className="text-white font-bold text-xl">
+        {historyEntries.length > 0 && (
+          <div className="text-white font-bold text-xl">
+            {new Date(historyEntries[currentEntryIndex].created_at).toLocaleDateString("en-US", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric"
+            })}
+          </div>
+        )}
+      </div>
+      <ul className="mt-5 pl-5">
+        {historyEntries.length > 0 &&
+          historyEntries[currentEntryIndex].maxes && // Added null check for maxes
+          historyEntries[currentEntryIndex].maxes.map((max, index) => (
+            <li key={index} className="text-white">
+              {index + 1}RM: {max}
+            </li>
+          ))}
+      </ul>
+    </div>
+    <button
+      className="ml-4 p-2 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white font-bold text-xl"
+      onClick={navigateToNextEntry}
+      disabled={currentEntryIndex === historyEntries.length - 1}
+    >
+      {">"}
+    </button>
+  </div>
+)}
+
+
     </div>
   );
 };

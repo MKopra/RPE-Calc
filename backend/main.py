@@ -11,7 +11,6 @@ import users
 
 app = FastAPI()
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # Replace with your frontend domain
@@ -61,15 +60,12 @@ exercise_collection = db["exercises"]
 
 
 @app.post("/exercises/{user_id}")
-async def process_data(input_data: InputDataWithDate):  # user_data: CreateUserData):
-    print("provided user_id", input_data.user_id)
-    print("provided input_data", input_data)
-    create_or_update(input_data)  ###### next step lets try ipython
+async def process_data(input_data: InputDataWithDate):  
+    create_or_update(input_data)  
 
 
 @app.options("/rpe-calc")
 async def options(request: Request):
-    # Handle OPTIONS method by returning a response with allowed methods
     headers = {
         "Access-Control-Allow-Origin": "http://localhost:3000",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -78,7 +74,7 @@ async def options(request: Request):
     return JSONResponse(content={}, headers=headers)
 
 
-@app.post("/create-account")  #### changed to /login
+@app.post("/create-account")  
 def create_user_endpoint(data: CreateUserData):
     uuid = users.create_user(data.username, data.password, data.email)
     return {"UUID": uuid}
@@ -91,7 +87,6 @@ def read_exercises(user_id: str):
 
 @app.get("/rpe-historical/{user_id}")
 def hist_exercises(user_id: str, exercise_name: str = Query(..., alias="exerciseName")):
-    print("inside hist_exercises")
     return find_historical_entries(user_id, exercise_name)
 
 
@@ -99,12 +94,8 @@ def hist_exercises(user_id: str, exercise_name: str = Query(..., alias="exercise
 async def login_user(request: Request):
     data = await request.json()
     username = data.get("username")
-    print("username:", username)
     password = data.get("password")
-    print("password:", password)
     if auth_user(username, password):
-        print("auth success")
         return login_uuid(username=username)
     else:
-        print("auth failed")
         return {"login failed"}
