@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState, useEffect } from "react";
 import algo from "./algo";
 import OutputTable from "./outputtable";
 import DropDown from "./dropdown";
+import { fetchRMHistory } from "./utils";
+import { User } from "./login";
 
 interface ExerciseDatum {
   name: string;
@@ -146,6 +148,15 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
     handleExerciseNameChange(exerciseName, tabId);
   };
 
+  const handleHistoryClick = async () => {
+    if (typeof User == 'string'){
+      const data = await fetchRMHistory(User, exerciseName)
+      console.log("got the history back in the FE",data)
+    
+    }
+
+  };
+
   const [selectSet, setSelectSet] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const Sets = () => {
@@ -280,6 +291,14 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
             />
           )}
         </button>
+      </div>
+      <div className="pt-5">
+          <button
+              type='submit'
+              onClick={handleHistoryClick}
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-md shadow-md">
+              History
+          </button>
       </div>
     </div>
   );

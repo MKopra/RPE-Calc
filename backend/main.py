@@ -1,9 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pymongo import MongoClient
-from exercises import read_exercise_data, create_or_update
+from exercises import read_exercise_data, create_or_update, find_historical_entries
 from users import auth_user, login_uuid
 from datetime import datetime
 
@@ -17,6 +17,8 @@ app.add_middleware(
     allow_origins=["http://localhost:3000"],  # Replace with your frontend domain
     allow_methods=["GET", "POST", "OPTIONS"],  # Add other allowed methods if needed
     allow_headers=["Content-Type"],  # Add other allowed headers if needed
+    allow_credentials=True,
+    expose_headers=["Content-Disposition"],
 )
 
 
@@ -41,6 +43,9 @@ class CreateUserData(BaseModel):
     password: str
     email: str
 
+class HistEntryData(BaseModel):
+    user_id: str
+    exercise_name: str
 
 database = "rpe-calc"
 
@@ -82,6 +87,12 @@ def create_user_endpoint(data: CreateUserData):
 @app.get("/exercises/{user_id}")
 def read_exercises(user_id: str):
     return read_exercise_data(user_id)
+
+
+@app.get("/rpe-historical/{user_id}")
+def hist_exercises(user_id: str, exercise_name: str = Query(..., alias="exerciseName")):
+    print("inside hist_exercises")
+    return find_historical_entries(user_id, exercise_name)
 
 
 @app.post("/login")
