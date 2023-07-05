@@ -52,6 +52,8 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const [fourrepmax, setFourRepMax] = useState<number>(exercise_data[tabId]?.maxes[3] || 0);
   const [fiverepmax, setFiveRepMax] = useState<number>(exercise_data[tabId]?.maxes[4] || 0);
   const [showHistory, setShowHistory] = useState<boolean>(false); // New state for controlling history visibility
+  const [historyEntries, setHistoryEntries] = useState<HistoryDatum[]>([]);
+  const [currentEntryIndex, setCurrentEntryIndex] = useState<number>(0);
 
 
   useEffect(() => {
@@ -166,17 +168,17 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const handleExerciseNameBlur = () => {
     handleExerciseNameChange(exerciseName, tabId);
   };
-  const [historyEntries, setHistoryEntries] = useState<HistoryDatum[]>([]);
-  const [currentEntryIndex, setCurrentEntryIndex] = useState<number>(0);
 
   const handleHistoryClick = async () => {
     if (typeof User == 'string'){
-      const data = await fetchRMHistory(User, exerciseName)
-      console.log("got the history back in the FE",data)
-      setHistoryEntries(data);
-      setCurrentEntryIndex(data.length - 1);
+      const histdata = await fetchRMHistory(User, exerciseName)
+      console.log("got the history back in the FE",histdata)
+      setHistoryEntries(histdata);
+      setCurrentEntryIndex(histdata.length - 1);
       setShowHistory(prevShowHistory => !prevShowHistory);    }
   };
+
+
   const navigateToNextEntry = () => {
     setCurrentEntryIndex((prevIndex) => prevIndex + 1);
   };

@@ -12,7 +12,7 @@ interface ExerciseDatum {
 
 interface InputDataWithDate {
     user_id: string;
-    exercise_data: ExerciseDatum[];
+    exercise_data: ExerciseDatum;
     created_at: Date
 }
 
@@ -83,7 +83,7 @@ function Menu() {
         if (User !== undefined) {
         const data: InputDataWithDate = {
             user_id: User,
-            exercise_data: exerciseData,
+            exercise_data: exerciseData[tabIndex],
             created_at: new Date(),
         };
             event.preventDefault();

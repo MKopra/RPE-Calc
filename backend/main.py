@@ -28,12 +28,12 @@ class ExerciseDatum(BaseModel):
 
 class InputData(BaseModel):
     user_id: str
-    exercise_data: list[ExerciseDatum]
+    exercise_data: ExerciseDatum
 
 
 class InputDataWithDate(BaseModel):
     user_id: str
-    exercise_data: list[ExerciseDatum]
+    exercise_data: ExerciseDatum
     created_at: datetime
 
 
@@ -42,9 +42,11 @@ class CreateUserData(BaseModel):
     password: str
     email: str
 
+
 class HistEntryData(BaseModel):
     user_id: str
     exercise_name: str
+
 
 database = "rpe-calc"
 
@@ -60,8 +62,10 @@ exercise_collection = db["exercises"]
 
 
 @app.post("/exercises/{user_id}")
-async def process_data(input_data: InputDataWithDate):  
-    create_or_update(input_data)  
+async def process_data(input_data: InputDataWithDate):
+    exercise_dict = dict(input_data.exercise_data)  # Convert to a dictionary
+    input_data.exercise_data = exercise_dict  # Update the exercise_data attribute
+    create_or_update(input_data)
 
 
 @app.options("/rpe-calc")
@@ -74,7 +78,7 @@ async def options(request: Request):
     return JSONResponse(content={}, headers=headers)
 
 
-@app.post("/create-account")  
+@app.post("/create-account")
 def create_user_endpoint(data: CreateUserData):
     uuid = users.create_user(data.username, data.password, data.email)
     return {"UUID": uuid}
