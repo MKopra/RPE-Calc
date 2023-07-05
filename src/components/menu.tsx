@@ -12,7 +12,7 @@ interface ExerciseDatum {
 
 interface InputDataWithDate {
     user_id: string;
-    exercise_data: ExerciseDatum[];
+    exercise_data: ExerciseDatum;
     created_at: Date
 }
 
@@ -36,15 +36,16 @@ function Menu() {
       
 
     const handleClick = async () => { ///// handleLoadData
-        if (typeof User === 'string' && User.length === 24) {
+        if (User !== undefined && typeof User === 'string' && User.length === 24) {
             try {
                 console.log("handleclick user print",User)
                 const data = await fetchData(User);
-                setExerciseData(data.exercise_data);
-                setExerciseNames(data.exercise_data.map((item: { name: string }) => item.name));
+                console.log("data.exercise_data", data)
+                setExerciseData(data);
+                setExerciseNames(data.map((item: { name: string }) => item.name));
                 console.log('exerciseData', exerciseData)
                 console.log("exercise_data ie everything", data)
-                const initialTabs = Array.from({ length: data.exercise_data.length }, (_, index) => index);
+                const initialTabs = Array.from({ length: data.length }, (_, index) => index);
                 setTabs(initialTabs);
                 setMessage('')
             } catch (error) {
@@ -82,7 +83,7 @@ function Menu() {
         if (User !== undefined) {
         const data: InputDataWithDate = {
             user_id: User,
-            exercise_data: exerciseData,
+            exercise_data: exerciseData[tabIndex],
             created_at: new Date(),
         };
             event.preventDefault();
