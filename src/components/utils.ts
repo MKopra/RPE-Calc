@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { User } from './login';
+import { PureComponent } from 'react';
+
+
 
 
 //export var USER: any = "6498904c419d284a1cff301a"

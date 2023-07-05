@@ -4,6 +4,18 @@ import OutputTable from "./outputtable";
 import DropDown from "./dropdown";
 import { fetchRMHistory } from "./utils";
 import { User } from "./login";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+
+
 
 interface ExerciseDatum {
   name: string;
@@ -49,7 +61,6 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
     setFourRepMax(exercise_data[tabId]?.maxes[3] || 0);
     setFiveRepMax(exercise_data[tabId]?.maxes[4] || 0);
   }, [exercise_data, tabId]);
-
 
 
   const handleExerciseNameChange = (value: string, tabId: number) => {
@@ -173,6 +184,44 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const navigateToPreviousEntry = () => {
     setCurrentEntryIndex((prevIndex) => prevIndex - 1);
   };
+  type GraphData = {
+    Date: string;
+    Estimated1RM: number[];
+  };
+  
+  const calculateEstimated1RM = (maxes: number[]): number => {
+    if (maxes[0] !== 0) {
+      return Math.round(maxes[0]);
+    } else if (maxes[1] !== 0) {
+      return Math.round(maxes[1] / 0.94);
+    } else if (maxes[2] !== 0) {
+      return Math.round(maxes[2] / 0.91);
+    } else if (maxes[3] !== 0) {
+      return Math.round(maxes[3] / 0.883);
+    } else if (maxes[4] !== 0) {
+      return Math.round(maxes[4] / 0.86);
+    } else {
+      return 0;
+    }
+  };
+  
+  
+  
+  const createGraphData = (historyEntries: HistoryDatum[]): GraphData[] => {
+    console.log("maxes", historyEntries)
+    const dateFormatOptions: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };    
+    return historyEntries.map(entry => ({
+      Date: new Date(entry.created_at).toLocaleDateString(undefined, dateFormatOptions),
+      Estimated1RM: [calculateEstimated1RM(entry.maxes)]
+    }));
+  };
+  const graphData: GraphData[] = createGraphData(historyEntries);
+  
+  console.log(graphData)
 
   const [selectSet, setSelectSet] = useState<string>("");
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
@@ -339,13 +388,17 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
         )}
       </div>
       <ul className="mt-5 pl-5">
-        {historyEntries.length > 0 &&
-          historyEntries[currentEntryIndex].maxes && // Added null check for maxes
-          historyEntries[currentEntryIndex].maxes.map((max, index) => (
-            <li key={index} className="text-white">
-              {index + 1}RM: {max}
-            </li>
-          ))}
+      {historyEntries.length > 0 &&
+  historyEntries[currentEntryIndex].maxes &&
+  historyEntries[currentEntryIndex].maxes
+    .map((max, index) => ({ max, index: index + 1 }))
+    .filter(({ max }) => max !== 0)
+    .map(({ max, index }) => (
+      <li key={index} className="text-white">
+        {index}RM: {max}
+      </li>
+    ))}
+
       </ul>
     </div>
     <button
@@ -355,7 +408,43 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
     >
       {">"}
     </button>
+    <div className="pl-10">
+    <div style={{ width: "500px", 
+      height: "300px",
+      backgroundColor: "white" }}>
+      <ResponsiveContainer width="100%" 
+                    height="100%">
+      <LineChart
+      width={500}
+      height={300}
+      data={graphData}
+      margin={{
+      top: 5,
+      right: 30,
+      left: 20,
+      bottom: 5,
+      }}
+      >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="Date" />
+      <YAxis domain={[
+          Math.min(...graphData.map(entry => entry.Estimated1RM[0])),
+          Math.max(...graphData.map(entry => entry.Estimated1RM[0]))
+        ]}/>
+      <Tooltip />
+      <Legend />
+      <Line
+      type="monotone"
+      dataKey="Estimated1RM"
+      stroke="#8884d8"
+      activeDot={{ r: 8 }}
+      />
+      </LineChart>
+      </ResponsiveContainer>
+      </div>
+      </div>
   </div>
+  
 )}
 
 
