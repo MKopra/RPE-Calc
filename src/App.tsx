@@ -13,6 +13,7 @@ import RoutesApp from "./components/routes";
 import Menu from "./components/menu";
 import  Login  from './components/login';
 import { handleLogout } from './components/login';
+import RPECalc from './components/rpecalc';
 
 export let User: string | undefined = "";
 
@@ -54,11 +55,9 @@ function App() {
         <div className={`app-content ${isLoginOpen ? "blur" : ""}`}>
           <Routes>
             <Route path='/' element={LandingPageElement}/>
-            <Route path='/onerepmax-landing' element={<OneRepLanding OneRepMenu={<OneRepMenu />} />}/>
             <Route path='/onerepmax-calc' element={<OneRepMenu/>}/>
-            <Route path='/rpe-landing' element={<EraseButton menu={<Menu/>}/>}/>
-            <Route path='/rpe-calc' element={<Menu/>}/>
-            <Route path='/cal-landing' element={<CalLanding CalMenu={<CalMenu/>} />}/>
+            <Route path='/exercise-library' element={<Menu/>}/>
+            <Route path='/rpe-calc' element={<RPECalc/>}/>
             <Route path='/cal-calc' element={<CalMenu/>}/>
           </Routes>
         </div>
