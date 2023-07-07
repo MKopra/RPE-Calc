@@ -51,6 +51,11 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   const [threerepmax, setThreeRepMax] = useState<number>(exercise_data[tabId]?.maxes[2] || 0);
   const [fourrepmax, setFourRepMax] = useState<number>(exercise_data[tabId]?.maxes[3] || 0);
   const [fiverepmax, setFiveRepMax] = useState<number>(exercise_data[tabId]?.maxes[4] || 0);
+  const [sixrepmax, setSixRepMax] = useState<number>(exercise_data[tabId]?.maxes[5] || 0);
+  const [sevenrepmax, setSevenRepMax] = useState<number>(exercise_data[tabId]?.maxes[6] || 0);
+  const [eightrepmax, setEightRepMax] = useState<number>(exercise_data[tabId]?.maxes[7] || 0);
+  const [ninerepmax, setNineRepMax] = useState<number>(exercise_data[tabId]?.maxes[8] || 0);
+  const [tenrepmax, setTenRepMax] = useState<number>(exercise_data[tabId]?.maxes[9] || 0);
   const [showHistory, setShowHistory] = useState<boolean>(false); // New state for controlling history visibility
   const [historyEntries, setHistoryEntries] = useState<HistoryDatum[]>([]);
   const [currentEntryIndex, setCurrentEntryIndex] = useState<number>(0);
@@ -62,6 +67,12 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
     setThreeRepMax(exercise_data[tabId]?.maxes[2] || 0);
     setFourRepMax(exercise_data[tabId]?.maxes[3] || 0);
     setFiveRepMax(exercise_data[tabId]?.maxes[4] || 0);
+    setSixRepMax(exercise_data[tabId]?.maxes[5] || 0);
+    setSevenRepMax(exercise_data[tabId]?.maxes[6] || 0);
+    setEightRepMax(exercise_data[tabId]?.maxes[7] || 0);
+    setNineRepMax(exercise_data[tabId]?.maxes[8] || 0);
+    setTenRepMax(exercise_data[tabId]?.maxes[9] || 0);
+    setExerciseName(exerciseNames[tabId]);
   }, [exercise_data, tabId]);
 
 
@@ -165,12 +176,89 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
     }
   };
 
+  const handleSixRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number, prevExerciseData: ExerciseDatum[]) => {
+    const value = +e.target.value;
+    const updatedExerciseData = [...prevExerciseData];
+    const maxes = [...updatedExerciseData[tabId]?.maxes]; // Retrieve maxes based on current tabId
+    if (maxes) {
+      maxes[5] = value;
+      updatedExerciseData[tabId] = {
+        ...updatedExerciseData[tabId],
+        maxes: maxes,
+      };
+      setExerciseData(updatedExerciseData);
+      setSixRepMax(value)
+    }
+  };
+
+  const handleSevenRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number, prevExerciseData: ExerciseDatum[]) => {
+    const value = +e.target.value;
+    const updatedExerciseData = [...prevExerciseData];
+    const maxes = [...updatedExerciseData[tabId]?.maxes]; // Retrieve maxes based on current tabId
+    if (maxes) {
+      maxes[6] = value;
+      updatedExerciseData[tabId] = {
+        ...updatedExerciseData[tabId],
+        maxes: maxes,
+      };
+      setExerciseData(updatedExerciseData);
+      setSevenRepMax(value)
+    }
+  };
+
+  const handleEightRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number, prevExerciseData: ExerciseDatum[]) => {
+    const value = +e.target.value;
+    const updatedExerciseData = [...prevExerciseData];
+    const maxes = [...updatedExerciseData[tabId]?.maxes]; // Retrieve maxes based on current tabId
+    if (maxes) {
+      maxes[7] = value;
+      updatedExerciseData[tabId] = {
+        ...updatedExerciseData[tabId],
+        maxes: maxes,
+      };
+      setExerciseData(updatedExerciseData);
+      setEightRepMax(value)
+    }
+  };
+
+  const handleNineRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number, prevExerciseData: ExerciseDatum[]) => {
+    const value = +e.target.value;
+    const updatedExerciseData = [...prevExerciseData];
+    const maxes = [...updatedExerciseData[tabId]?.maxes]; // Retrieve maxes based on current tabId
+    if (maxes) {
+      maxes[8] = value;
+      updatedExerciseData[tabId] = {
+        ...updatedExerciseData[tabId],
+        maxes: maxes,
+      };
+      setExerciseData(updatedExerciseData);
+      setNineRepMax(value)
+    }
+  };
+
+  const handleTenRMChange = (e: ChangeEvent<HTMLInputElement>, tabId: number, prevExerciseData: ExerciseDatum[]) => {
+    const value = +e.target.value;
+    const updatedExerciseData = [...prevExerciseData];
+    const maxes = [...updatedExerciseData[tabId]?.maxes]; // Retrieve maxes based on current tabId
+    if (maxes) {
+      maxes[9] = value;
+      updatedExerciseData[tabId] = {
+        ...updatedExerciseData[tabId],
+        maxes: maxes,
+      };
+      setExerciseData(updatedExerciseData);
+      setTenRepMax(value)
+    }
+  };
+
   const handleExerciseNameBlur = () => {
     handleExerciseNameChange(exerciseName, tabId);
   };
 
   const handleHistoryClick = async () => {
     if (typeof User == 'string'){
+      console.log("ExerciseName",exerciseName)
+      console.log("ExerciseNames", exerciseNames)
       const histdata = await fetchRMHistory(User, exerciseName)
       console.log("got the history back in the FE",histdata)
       setHistoryEntries(histdata);
@@ -225,25 +313,6 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   
   console.log(graphData)
 
-  const [selectSet, setSelectSet] = useState<string>("");
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const Sets = () => {
-    return ["Set of 1", "Set of 2", "Set of 3", "Set of 4", "Set of 5", "Set of 6", "Set of 7", "Set of 8"];
-  };
-
-  const RMs = algo(onerepmax, tworepmax, threerepmax, fourrepmax, fiverepmax)
-
-  const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
-  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    if (event.currentTarget === event.target) {
-      setShowDropDown(false);
-    }
-  };
-  const SetSelection = (Set: string): void => {
-    setSelectSet(Set);
-  };
 
   return (
     <div className="pb-10">
@@ -258,6 +327,9 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
                 handleExerciseNameChange(e.target.value, tabId)}
               onBlur={handleExerciseNameBlur}
             />
+            <header className="text-4xl text-white font-bold"> 
+              Personal Records
+            </header>
             <button
               className="text-white font-bold text-xl hover:text-red-700"
               onClick={() => handleCloseTab(tabId)}
@@ -320,45 +392,59 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
               />
             </div>
           </div>
-          <div className="flex flex-row align-top w-full justify-center">
-            <div className="px-4 w-full">
-              <div className="py-10">
-                <div className="justify-center py-5 items-start bg-white rounded-md shadow-md font-semibold h-full">
-                  <OutputTable
-                    selectSet={selectSet}
-                    RMs={RMs} />
-                </div>
-              </div>
+          <div>
+          <div className="py-5 grid grid-cols-2 w-2/3">
+              <label className="px-2 text-white text-xl font-bold flex justify-center">6 Rep Max:</label>
+              <input
+                className="rounded-md p-2"
+                type="number"
+                value={sixrepmax === 0 ? "" : sixrepmax}
+                onChange={(e) => {
+                  handleSixRMChange(e, tabId, exercise_data);
+                }}
+              />
+            </div>
+            <div className="py-5 grid grid-cols-2 w-2/3">
+              <label className="px-2 text-white text-xl font-bold flex justify-center">7 Rep Max:</label>
+              <input
+                className="rounded-md p-2"
+                type="number"
+                value={sevenrepmax === 0 ? "" : sevenrepmax}
+                onChange={(e) => {
+                  handleSevenRMChange(e, tabId, exercise_data);
+                }}
+              />
+            </div>
+            <div className="py-5 grid grid-cols-2 w-2/3">
+              <label className="px-2 text-white text-xl font-bold flex justify-center">8 Rep Max:</label>
+              <input
+                className="rounded-md p-2"
+                type="number"
+                value={eightrepmax === 0 ? "" : eightrepmax}
+                onChange={(e) => {
+                  handleEightRMChange(e, tabId, exercise_data);
+                }}
+              />
+            </div>
+            <div className="py-5 grid grid-cols-2 w-2/3">
+              <label className="px-2 text-white text-xl font-bold flex justify-center">9 Rep Max:</label>
+              <input
+                className="rounded-md p-2"
+                type="number"
+                value={ninerepmax === 0 ? "" : ninerepmax}
+                onChange={(e) => handleNineRMChange(e, tabId, exercise_data)}
+              />
+            </div>
+            <div className="py-5 grid grid-cols-2 w-2/3">
+              <label className="px-2 text-white text-xl font-bold flex justify-center">10 Rep Max:</label>
+              <input
+                className="rounded-md p-2"
+                type="number"
+                value={tenrepmax === 0 ? "" : tenrepmax}
+                onChange={(e) => handleTenRMChange(e, tabId, exercise_data)}
+              />
             </div>
           </div>
-        </div>
-        <div className="flex justify-left">
-          <div className="py-2 text-white text-lg font-semiboldt">
-            {selectSet
-              ? ``
-              : "Select the number of repetitions completed"}
-          </div>
-        </div>
-      </div>
-      <div>
-        <button
-          className={`bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded-md shadow-md ${showDropDown ? "active" : ""}`}
-          onClick={(): void => toggleDropDown()}
-          onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-            dismissHandler(e)
-          }
-        >
-          <button
-            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-2 rounded-md shadow-md hover:bg-gray-600 active:outline-none">{selectSet ? "Selected: " + selectSet : "Select ..."} </button>
-          {showDropDown && (
-            <DropDown
-              Sets={Sets()}
-              showDropDown={false}
-              toggleDropDown={(): void => toggleDropDown()}
-              SetSelection={SetSelection}
-            />
-          )}
-        </button>
       </div>
       <div className="pt-5">
           <button
@@ -450,6 +536,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
 )}
 
 
+    </div>
     </div>
   );
 };

@@ -21,7 +21,7 @@ function Menu() {
     const [visibleTab, setVisibleTab] = useState<number>(0);
     const [tabIndex, setTabIndex] = useState<number>(0);
     const [exerciseData, setExerciseData] = useState<ExerciseDatum[]>([
-        { name: "Exercise 1", maxes: [0, 0, 0, 0, 0] }
+        { name: "Exercise 1", maxes: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
     ]);
     const [exerciseNames, setExerciseNames] = useState<string[]>(exerciseData.map((exercise) => exercise.name));
     const [message, setMessage] = useState<string>("");
@@ -69,7 +69,7 @@ function Menu() {
             ...prevExerciseData,
             {
                 name: "",
-                maxes: [0, 0, 0, 0, 0]
+                maxes: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
         ]);
 

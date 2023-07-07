@@ -1,18 +1,16 @@
 import EraseButton from './components/erasebutton';
 import './index.css';
-import landingPage from "./components/landingpage";
-import LandingPageElement from "./components/landingpage";
+import LandingPage from "./components/landingpage";
 import Navbar from "./components/navbar";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import OneRepLanding from "./components/onereplanding";
 import OneRepMenu from "./components/onerepmenu";
-import CalLanding from "./components/callanding";
 import CalMenu from "./components/calmenu";
-import RoutesApp from "./components/routes";
 import Menu from "./components/menu";
 import  Login  from './components/login';
 import { handleLogout } from './components/login';
+import RPECalc from './components/rpecalc';
+import HomePage from './components/homepage';
 
 export let User: string | undefined = "";
 
@@ -53,12 +51,11 @@ function App() {
       )}
         <div className={`app-content ${isLoginOpen ? "blur" : ""}`}>
           <Routes>
-            <Route path='/' element={LandingPageElement}/>
-            <Route path='/onerepmax-landing' element={<OneRepLanding OneRepMenu={<OneRepMenu />} />}/>
+            <Route path= '/' element={<HomePage/>}/>
+            <Route path='/tools' element={<LandingPage/>}/>
             <Route path='/onerepmax-calc' element={<OneRepMenu/>}/>
-            <Route path='/rpe-landing' element={<EraseButton menu={<Menu/>}/>}/>
-            <Route path='/rpe-calc' element={<Menu/>}/>
-            <Route path='/cal-landing' element={<CalLanding CalMenu={<CalMenu/>} />}/>
+            <Route path='/exercise-library' element={<Menu/>}/>
+            <Route path='/rpe-calc' element={<RPECalc/>}/>
             <Route path='/cal-calc' element={<CalMenu/>}/>
           </Routes>
         </div>
