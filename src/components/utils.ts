@@ -33,3 +33,16 @@ export async function fetchRMHistory(userId: string, exerciseName: string): Prom
   }
 }
 
+export async function fetchExerciseTrend(userId: string): Promise<any> {
+  const url = `${BASE_URL}/dashboard/${userId}`;
+  //console.log("fetchRMHistory user_id:", userId, "name", exerciseName);
+  try {
+    const response = await axios.get(url);
+    console.log("fetch response", response);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
