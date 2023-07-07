@@ -72,6 +72,5 @@ function LandingPage() {
         </div>
     );
 }
-const LandingPageElement = <LandingPage />;
 
-export default LandingPageElement;
+export default LandingPage;
