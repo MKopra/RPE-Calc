@@ -3,8 +3,6 @@ import openai
 import ast
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
-openai.api_key = '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'
-
 
 # Rest of your code using the OpenAI API
 
@@ -108,7 +106,6 @@ presc_exercise_data = {
        'english': True, 
        'notes': ''}]
 }
-ai_response = generate_workout(exercise_data, user_string)
 
 def update_workout_and_provide_feedback(presc_exercise_data, user_response_string):
 
@@ -166,26 +163,39 @@ def reformat_exercises_string(exercises_string):
 
     return result
 
-data = segment_data(ai_response)
-print("data",data)
-# Example usage
-#user_workout = reformat_exercises_string(data)
 
-def ui_version(ai_response):
+
+def ui_user_workout_request_response(ai_response): # splice the string up to replace the data object with a user friendly program layout in the UI
     data = segment_data(ai_response)
     user_workout = reformat_exercises_string(data)
     start_data = ai_response.find("{")
     end_data = ai_response.rfind("}")
     part_one = ai_response[0:start_data]
-    print("p1",part_one)
     part_two = ai_response[end_data+1:len(ai_response)]
-    print("p2",part_two)
-    print("workout", user_workout)
     ui_return = part_one+user_workout+part_two
     return ui_return
 
-ui_return = ui_version(ai_response)
-print("ui_version:", ui_return)
+def produce_workout_data(ai_response): # used after ai provides workout and after ai provides feedback and fills out arrays
+    data = segment_data(ai_response)
+    result = ast.literal_eval(data)
+    return result
+
+def ui_user_workout_feedback(ai_response): # cut the data object out because after the workout the user only needs to see an atta boy and the data object behind the scenes will be used to fill out the training log
+    feedback = segment_ai(ai_response)
+    reminder_string = "Reminder that if you did not provide all weights and effort levels for all of your sets, that you can updated them in the Training Log. Thank you beep boop."
+    result = feedback+reminder_string
+    return result
+
+ai_response = update_workout_and_provide_feedback(presc_exercise_data, user_response_string)
+
+data = produce_workout_data(ai_response)
+print("ai filled out data object:", data)
+
+ui = ui_user_workout_feedback(ai_response)
+print("what the user sees in the ui after asking for feedback:", ui)
+
+# ui_return = ui_user_workout_request_response(ai_response)
+# print("ui_version:", ui_return)
 
 #ai_only = segment_ai(ai_response)
 #print("ai only:", ai_only)
