@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pymongo import MongoClient
-from exercises import read_exercise_data, create_or_update, find_historical_entries
+from exercises import read_exercise_data, create_or_update, find_historical_entries, find_dash_exercises
 from users import auth_user, login_uuid
 from datetime import datetime
 
@@ -93,6 +93,10 @@ def read_exercises(user_id: str):
 def hist_exercises(user_id: str, exercise_name: str = Query(..., alias="exerciseName")):
     return find_historical_entries(user_id, exercise_name)
 
+@app.get("/dashboard/{user_id}")
+def dash_exercises(user_id: str):
+    return find_dash_exercises(user_id)
+
 
 @app.post("/login")
 async def login_user(request: Request):
@@ -103,3 +107,4 @@ async def login_user(request: Request):
         return login_uuid(username=username)
     else:
         return {"login failed"}
+
